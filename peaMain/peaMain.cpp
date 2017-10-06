@@ -2,10 +2,14 @@
 //
 
 #include "stdafx.h"
-
+#include "..\pea\Application.h"
 
 int main()
 {
-    return 0;
+	Application app;
+
+	app.Run();
+
+	return 0;
 }
 

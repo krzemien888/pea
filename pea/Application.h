@@ -2,15 +2,19 @@
 
 #include "stdafx.h"
 
-//#include "utilities\MenuOption.h"
+#include "Action.h"
 
 class Application final
 {
 public:
 	Application();
-	~Application();
+	~Application() = default;
 	void Run();
+	void Stop();
 private:
-//	void addMenuOption(MenuOption option);
-
+	void addAction(Action action);
+	void printActions();
+	Action parseInput(std::string input);
+	bool running = false;
+	std::map<int, Action> actions;
 };
