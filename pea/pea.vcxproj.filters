@@ -7,6 +7,9 @@
     <Filter Include="utilities">
       <UniqueIdentifier>{6ac9ff95-cbdc-45ad-8c5b-f788ed97e048}</UniqueIdentifier>
     </Filter>
+    <Filter Include="structures">
+      <UniqueIdentifier>{bc27e88f-3e42-4a06-8b96-f558653d7517}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Action.h">
@@ -15,6 +18,13 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="matrixGraph.h">
+      <Filter>structures</Filter>
+    </ClInclude>
+    <ClInclude Include="matrixGraphReader.h">
+      <Filter>utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="peaInclude.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp">
@@ -22,5 +32,11 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="matrixGraph.cpp">
+      <Filter>structures</Filter>
+    </ClCompile>
+    <ClCompile Include="matrixGraphReader.cpp">
+      <Filter>utilities</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
