@@ -2,9 +2,16 @@
 #include "matrixGraph.h"
 	
 
-matrixGraph matrixGraph::generate(const int vertexCount, const int density, const int minValue, const int maxValue)
+matrixGraph matrixGraph::generate(const int vertexCount, const float density, const int minValue, const int maxValue)
 {
-	return matrixGraph();
+	matrixGraph m;
+	while (m.getSize() != vertexCount)
+		m.addVertex();
+
+	while (m.getDensity() != density)
+		m.setConnection(rand() % vertexCount, rand() % vertexCount, rand() % maxValue + minValue);
+
+	return m;
 }
 
 void matrixGraph::setMatrix(std::vector<std::vector<int>>& matrix)
@@ -19,12 +26,21 @@ void matrixGraph::setConnection(const int from, const int to, const int value)
 
 void matrixGraph::addVertex()
 {
-	for (auto line : _matrix)
-		line.push_back(0);
+	if (isEmpty())
+	{
+		std::vector<int> v(1, 0);
+		_matrix.push_back(v);
+		return;
+	}
+	else
+	{
+		for (std::vector<int>& line : _matrix)
+			line.push_back(0);
 	
-	std::vector<int> v(_matrix.size() + 1, 0);
+		std::vector<int> v(_matrix.size() + 1, 0);
 
-	_matrix.push_back(v);
+		_matrix.push_back(v);
+	}
 }
 
 int matrixGraph::getConnectionValue(const int from, const int to) const
@@ -35,6 +51,20 @@ int matrixGraph::getConnectionValue(const int from, const int to) const
 std::vector<int> matrixGraph::getNeighbours(const int vectex) const
 {
 	return _matrix[vectex];
+}
+
+float matrixGraph::getDensity() const
+{
+	int edgeCount = 0;
+
+	for (auto row : _matrix)
+		for (auto edge : row)
+			if (edge != 0)
+				edgeCount++;
+
+	float density = (float)edgeCount/(float)(getSize() * (getSize() - 1));
+
+	return density;
 }
 
 size_t matrixGraph::getSize() const
@@ -53,4 +83,20 @@ bool matrixGraph::operator==(const matrixGraph & arg)
 				return false;
 
 	return true;
+}
+
+bool matrixGraph::isEmpty() const
+{
+	return _matrix.size() == 0;
+}
+
+std::ostream & operator<<(std::ostream & stream, const matrixGraph & m)
+{
+	for (unsigned int x = 0; x < m.getSize(); x++)
+	{
+		for (unsigned int y = 0; y < m.getSize(); y++)
+			stream << m.getConnectionValue(x, y) << " ";
+		stream << std::endl;
+	}	
+	return stream;
 }

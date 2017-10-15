@@ -26,14 +26,25 @@ TEST_F(matrixGraphTest, graphShouldBeAbleToBeGeneratedFrom2dVector)
 			ASSERT_EQ(vector2d[x][y], graph.getConnectionValue(x, y));
 };
 
-TEST_F(matrixGraphTest, graphShouldIncreaseSizeAndAccessDataAfterVertexAddition)
+TEST_F(matrixGraphTest, graphShouldIncreaseSizeAfterVertexAddition)
 {
 	int oldSize = graph.getSize();
 
-	graph.addVertex();
+	for(int i = 0; i < 5; i++)
+		graph.addVertex();
 
-	ASSERT_EQ(oldSize + 1, graph.getSize());
-	ASSERT_EQ(graph.getConnectionValue(0, 0), 0);
+	ASSERT_EQ(oldSize + 5, graph.getSize());
+};
+
+TEST_F(matrixGraphTest, graphShouldAccessDataAfterVertexAddition)
+{
+	int oldSize = graph.getSize();
+
+	for (int i = 0; i < 5; i++)
+		graph.addVertex();
+
+	ASSERT_NO_THROW(graph.setConnection(0, 4, 5));
+	ASSERT_NO_THROW(graph.getConnectionValue(0, 4));
 };
 
 TEST_F(matrixGraphTest, graphShouldChangeConnectionValue)
@@ -63,4 +74,47 @@ TEST_F(matrixGraphTest, graphShouldBeComparable)
 	otherGraph.setConnection(0, 0, 29);
 
 	ASSERT_FALSE(graph == otherGraph);
+}
+
+TEST_F(matrixGraphTest, graphShouldReturnProperDensity)
+{
+	for (int i = 0; i < 10; i++)
+		graph.addVertex();
+
+	for (int i = 0; i < 5; i++)
+		graph.setConnection(i, i + 1, 10);
+
+	ASSERT_EQ(graph.getDensity(), (float)5 / (float)90);
+}
+
+TEST_F(matrixGraphTest, graphShouldBeGeneratedWithGivenVertexCount)
+{
+	auto graph = matrixGraph::generate(10, 0, 1, 20);
+
+	ASSERT_EQ(graph.getSize(), 10);
+}
+
+TEST_F(matrixGraphTest, graphShouldBeGeneratedWithValuesBeetweenGivenRange)
+{
+	auto graph = matrixGraph::generate(10, 0.5);
+
+	int max = 0, min = 100;
+	for(unsigned int x = 0; x < graph.getSize(); x++)
+		for (unsigned int y = 0; y < graph.getSize(); y++)
+		{
+			if (graph.getConnectionValue(x, y) > max)
+				max = graph.getConnectionValue(x, y);
+			if (graph.getConnectionValue(x, y) < min && graph.getConnectionValue(x, y) != 0)
+				min = graph.getConnectionValue(x, y);
+		}
+
+	ASSERT_TRUE(max <= 20);
+	ASSERT_TRUE(min >= 1);
+}
+
+TEST_F(matrixGraphTest, graphShouldBeGeneratedWithGivenDensity)
+{
+	auto graph = matrixGraph::generate(10, 0.50, 1, 20);
+
+	ASSERT_EQ(graph.getDensity(), 0.50);
 }

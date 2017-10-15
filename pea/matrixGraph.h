@@ -6,7 +6,7 @@ class matrixGraph
 {
 public:
 
-	static matrixGraph generate(const int vertexCount, const int density, const int minValue = 1, const int maxValue = 20);
+	static matrixGraph generate(const int vertexCount, const float density, const int minValue = 1, const int maxValue = 20);
 
 	matrixGraph() = default;
 	~matrixGraph() = default;
@@ -17,12 +17,16 @@ public:
 
 	int getConnectionValue(const int from, const int to) const;
 	std::vector<int> getNeighbours(const int vectex) const; 
+	float getDensity() const;
 	size_t getSize() const ;
 
 
 	bool operator==(const matrixGraph& arg);
-
+	friend std::ostream& operator<< (std::ostream& stream, const matrixGraph& m);
 private:
 	std::vector<std::vector<int>> _matrix;
+
+
+	bool isEmpty() const;
 };
 

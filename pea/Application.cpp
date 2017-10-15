@@ -7,6 +7,9 @@ Application::Application()
 	addAction(Action(0, "Exit", [this](){
 		Stop();
 	}));
+
+
+	srand((unsigned int)time(NULL));
 }
 
 void Application::Run()
