@@ -10,6 +10,12 @@
     <Filter Include="structures">
       <UniqueIdentifier>{bc27e88f-3e42-4a06-8b96-f558653d7517}</UniqueIdentifier>
     </Filter>
+    <Filter Include="utilities\fileParser">
+      <UniqueIdentifier>{f1bdc023-6870-4707-aea5-528cb59b2f89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utilities\fileParser\TSP">
+      <UniqueIdentifier>{122b45bf-7e67-42ff-bb91-b4db8d089c3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Action.h">
@@ -21,10 +27,28 @@
     <ClInclude Include="matrixGraph.h">
       <Filter>structures</Filter>
     </ClInclude>
-    <ClInclude Include="matrixGraphReader.h">
-      <Filter>utilities</Filter>
-    </ClInclude>
     <ClInclude Include="peaInclude.h" />
+    <ClInclude Include="FileReader.h">
+      <Filter>utilities\fileParser</Filter>
+    </ClInclude>
+    <ClInclude Include="TSPDataParserFactory.h">
+      <Filter>utilities\fileParser\TSP</Filter>
+    </ClInclude>
+    <ClInclude Include="TSPFileReader.h">
+      <Filter>utilities\fileParser\TSP</Filter>
+    </ClInclude>
+    <ClInclude Include="TSPHeader.h">
+      <Filter>utilities\fileParser\TSP</Filter>
+    </ClInclude>
+    <ClInclude Include="TSPHeaderParser.h">
+      <Filter>utilities\fileParser\TSP</Filter>
+    </ClInclude>
+    <ClInclude Include="TSPData.h">
+      <Filter>utilities\fileParser\TSP</Filter>
+    </ClInclude>
+    <ClInclude Include="TSPEnums.h">
+      <Filter>utilities\fileParser\TSP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp">
@@ -35,8 +59,23 @@
     <ClCompile Include="matrixGraph.cpp">
       <Filter>structures</Filter>
     </ClCompile>
-    <ClCompile Include="matrixGraphReader.cpp">
-      <Filter>utilities</Filter>
+    <ClCompile Include="FileReader.cpp">
+      <Filter>utilities\fileParser</Filter>
+    </ClCompile>
+    <ClCompile Include="TSPDataParserFactory.cpp">
+      <Filter>utilities\fileParser\TSP</Filter>
+    </ClCompile>
+    <ClCompile Include="TSPFileReader.cpp">
+      <Filter>utilities\fileParser\TSP</Filter>
+    </ClCompile>
+    <ClCompile Include="TSPHeader.cpp">
+      <Filter>utilities\fileParser\TSP</Filter>
+    </ClCompile>
+    <ClCompile Include="TSPHeaderParser.cpp">
+      <Filter>utilities\fileParser\TSP</Filter>
+    </ClCompile>
+    <ClCompile Include="TSPData.cpp">
+      <Filter>utilities\fileParser\TSP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

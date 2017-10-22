@@ -4,10 +4,14 @@
 
 Application::Application()
 {
+	addAction(Action(1, "Wyswietl graf", [this]() {
+		std::cout << graph << std::endl;
+		system("pause");
+	}));
+
 	addAction(Action(0, "Exit", [this](){
 		Stop();
 	}));
-
 
 	srand((unsigned int)time(NULL));
 }

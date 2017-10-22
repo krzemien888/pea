@@ -15,5 +15,9 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <sstream>
+#include <unordered_map>
 
+
+#include "TSPEnums.h"
 // TODO: reference additional headers your program requires here

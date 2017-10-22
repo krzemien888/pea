@@ -3,6 +3,7 @@
 #include "stdafx.h"
 
 #include "Action.h"
+#include "matrixGraph.h"
 
 class Application final
 {
@@ -17,4 +18,6 @@ private:
 	Action parseInput(std::string input);
 	bool running = false;
 	std::map<int, Action> actions;
+
+	matrixGraph graph;
 };

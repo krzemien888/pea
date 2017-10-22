@@ -149,23 +149,34 @@
   <ItemGroup>
     <ClInclude Include="Action.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="FileReader.h" />
     <ClInclude Include="matrixGraph.h" />
-    <ClInclude Include="matrixGraphReader.h" />
     <ClInclude Include="peaInclude.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TSPData.h" />
+    <ClInclude Include="TSPDataParserFactory.h" />
+    <ClInclude Include="TSPEnums.h" />
+    <ClInclude Include="TSPFileReader.h" />
+    <ClInclude Include="TSPHeader.h" />
+    <ClInclude Include="TSPHeaderParser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="matrixGraph.cpp" />
-    <ClCompile Include="matrixGraphReader.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TSPData.cpp" />
+    <ClCompile Include="TSPDataParserFactory.cpp" />
+    <ClCompile Include="TSPFileReader.cpp" />
+    <ClCompile Include="TSPHeader.cpp" />
+    <ClCompile Include="TSPHeaderParser.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

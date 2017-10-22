@@ -9,5 +9,7 @@
 
 #include "gtest\gtest.h"
 #include "peaInclude.h"
+#include "TSPHeaderParser.h"
+#include <sstream>
 
 // TODO: reference additional headers your program requires here
