@@ -43,6 +43,13 @@ void matrixGraph::addVertex()
 	}
 }
 
+void matrixGraph::addVertex(unsigned int newSize)
+{
+	_matrix.resize(newSize);
+	for (auto &row : _matrix)
+		row.resize(newSize);
+}
+
 int matrixGraph::getConnectionValue(const int from, const int to) const
 {
 	return _matrix[from][to];
@@ -72,7 +79,7 @@ size_t matrixGraph::getSize() const
 	return _matrix.size();
 }
 
-bool matrixGraph::operator==(const matrixGraph & arg)
+bool matrixGraph::operator==(const matrixGraph & arg) const
 {
 	if (getSize() != arg.getSize())
 		return false;
@@ -88,6 +95,11 @@ bool matrixGraph::operator==(const matrixGraph & arg)
 bool matrixGraph::isEmpty() const
 {
 	return _matrix.size() == 0;
+}
+
+bool operator==(const matrixGraph & a, const matrixGraph & b)
+{
+	return a.operator==(b);
 }
 
 std::ostream & operator<<(std::ostream & stream, const matrixGraph & m)

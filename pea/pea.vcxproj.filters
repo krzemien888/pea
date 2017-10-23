@@ -49,6 +49,9 @@
     <ClInclude Include="TSPEnums.h">
       <Filter>utilities\fileParser\TSP</Filter>
     </ClInclude>
+    <ClInclude Include="TSPDataParser.h">
+      <Filter>utilities\fileParser\TSP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp">
@@ -75,6 +78,9 @@
       <Filter>utilities\fileParser\TSP</Filter>
     </ClCompile>
     <ClCompile Include="TSPData.cpp">
+      <Filter>utilities\fileParser\TSP</Filter>
+    </ClCompile>
+    <ClCompile Include="TSPDataParser.cpp">
       <Filter>utilities\fileParser\TSP</Filter>
     </ClCompile>
   </ItemGroup>

@@ -2,14 +2,16 @@
 
 #include "stdafx.h"
 #include "TSPEnums.h"
+#include "TSPHeader.h"
+#include "TSPDataParser.h"
 
 class TSPDataParserFactory
 {
-public:
 	TSPDataParserFactory() = default;
 	~TSPDataParserFactory() = default;
+public:
 
-	//static TSPDataParser* getDataParser(TSP::)
+	static std::shared_ptr<TSPDataParser> getDataParser(const TSPHeader &header , std::string &section);
 
 };
 

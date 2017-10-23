@@ -2,7 +2,8 @@
 
 namespace TSP {
 
-	enum WeightType {
+	enum class WeightType {
+		notSet,
 		explicitType,
 		euclidean2d,
 		euclidean3d,
@@ -18,7 +19,8 @@ namespace TSP {
 		special
 	};
 
-	enum EdgeWeightFormat {
+	enum class EdgeWeightFormat {
+		notSet,
 		function,
 		fullMatrix,
 		upperRow,
@@ -31,7 +33,8 @@ namespace TSP {
 		lowerDiagCol
 	};
 
-	enum Type {
+	enum class Type {
+		notSet,
 		tsp,
 		atsp,
 		sop,
@@ -40,20 +43,24 @@ namespace TSP {
 		tour
 	};
 
-	enum EdgeDataFormat {
+	enum class EdgeDataFormat {
+		notSet,
 		edgeList,
 		adjList
 	};
 
-	enum NodeCoordType {
+	enum class NodeCoordType {
+		notSet,
 		twodCoords,
 		threedCoords,
 		noCoords
 	};
 
-	enum DisplayDataType {
+	enum class DisplayDataType {
+		notSet,
 		coordDisplay,
 		twodDisplay,
 		noDisplay
 	};
+
 };

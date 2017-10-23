@@ -9,14 +9,12 @@ TSPHeaderParser::TSPHeaderParser()
 	initMaps();
 }
 
-TSPHeader TSPHeaderParser::parse(std::string header)
+TSPHeader TSPHeaderParser::parse(std::vector<std::string> text)
 {
 	TSPHeader output;
 	
-	std::stringstream ss(header);
-	
-	std::string line, setting, value;
-	while (getline(ss, line))
+	std::string setting, value;
+	for(auto line : text)
 	{
 		splitSettingValueString(line, setting, value);
 		
@@ -29,6 +27,12 @@ TSPHeader TSPHeaderParser::parse(std::string header)
 	}
 
 	return output;
+}
+
+TSPHeader TSPHeaderParser::parse(std::string text)
+{
+	std::vector<std::string> s = { text };
+	return parse(s);
 }
 
 void TSPHeaderParser::initMaps()
@@ -58,63 +62,63 @@ void TSPHeaderParser::initSetFunctionMap()
 
 void TSPHeaderParser::initTypeMap()
 {
-	typeMap["ATSP"] = atsp;
-	typeMap["TSP"] = tsp;
-	typeMap["SOP"] = sop;
-	typeMap["HCP"] = hcp;
-	typeMap["CVRP"] = cvrp;
-	typeMap["TOUR"] = tour;
+	typeMap["ATSP"] = TSP::Type::atsp;
+	typeMap["TSP"] = TSP::Type::tsp;
+	typeMap["SOP"] = TSP::Type::sop;
+	typeMap["HCP"] = TSP::Type::hcp;
+	typeMap["CVRP"] = TSP::Type::cvrp;
+	typeMap["TOUR"] = TSP::Type::tour;
 }
 
 void TSPHeaderParser::initWeightTypeMap()
 {
-	weightTypeMap["EXPLICIT"] = explicitType;
-	weightTypeMap["EUC_2D"] = euclidean2d;
-	weightTypeMap["EUC_3D"] = euclidean3d;
-	weightTypeMap["MAX_2D"] = max2d;
-	weightTypeMap["MAX_3D"] = max3d;
-	weightTypeMap["MAN_2D"] = man2d;
-	weightTypeMap["MAN_3D"] = man3d;
-	weightTypeMap["CEIL_2D"] = ceil2d;
-	weightTypeMap["GEO"] = geo;
-	weightTypeMap["ATT"] = att;
-	weightTypeMap["XRAY1"] = xray1;
-	weightTypeMap["XRAY2"] = xray2;
-	weightTypeMap["SPECIAL"] = special;
+	weightTypeMap["EXPLICIT"] = TSP::WeightType::explicitType;
+	weightTypeMap["EUC_2D"] = TSP::WeightType::euclidean2d;
+	weightTypeMap["EUC_3D"] = TSP::WeightType::euclidean3d;
+	weightTypeMap["MAX_2D"] = TSP::WeightType::max2d;
+	weightTypeMap["MAX_3D"] = TSP::WeightType::max3d;
+	weightTypeMap["MAN_2D"] = TSP::WeightType::man2d;
+	weightTypeMap["MAN_3D"] = TSP::WeightType::man3d;
+	weightTypeMap["CEIL_2D"] = TSP::WeightType::ceil2d;
+	weightTypeMap["GEO"] = TSP::WeightType::geo;
+	weightTypeMap["ATT"] = TSP::WeightType::att;
+	weightTypeMap["XRAY1"] = TSP::WeightType::xray1;
+	weightTypeMap["XRAY2"] = TSP::WeightType::xray2;
+	weightTypeMap["SPECIAL"] = TSP::WeightType::special;
 }
 
 void TSPHeaderParser::initEdgeWeightFormatMap()
 {
-	edgeWeightFormatMap["FUNCTION"] = function;
-	edgeWeightFormatMap["FULL_MATRIX"] = fullMatrix;
-	edgeWeightFormatMap["UPPER_ROW"] = upperRow;
-	edgeWeightFormatMap["LOWER_ROW"] = lowerRow;
-	edgeWeightFormatMap["UPPER_DIAG_ROW"] = upperDiagRow;
-	edgeWeightFormatMap["LOWER_DIAG_ROW"] = lowerDiagRow;
-	edgeWeightFormatMap["UPPER_COL"] = upperCol;
-	edgeWeightFormatMap["LOWER_COL"] = lowerCol;
-	edgeWeightFormatMap["UPPER_DIAG_COL"] = upperDiagCol;
-	edgeWeightFormatMap["LOWER_DIAG_COL"] = lowerDiagCol;
+	edgeWeightFormatMap["FUNCTION"] = TSP::EdgeWeightFormat::function;
+	edgeWeightFormatMap["FULL_MATRIX"] = TSP::EdgeWeightFormat::fullMatrix;
+	edgeWeightFormatMap["UPPER_ROW"] = TSP::EdgeWeightFormat::upperRow;
+	edgeWeightFormatMap["LOWER_ROW"] = TSP::EdgeWeightFormat::lowerRow;
+	edgeWeightFormatMap["UPPER_DIAG_ROW"] = TSP::EdgeWeightFormat::upperDiagRow;
+	edgeWeightFormatMap["LOWER_DIAG_ROW"] = TSP::EdgeWeightFormat::lowerDiagRow;
+	edgeWeightFormatMap["UPPER_COL"] = TSP::EdgeWeightFormat::upperCol;
+	edgeWeightFormatMap["LOWER_COL"] = TSP::EdgeWeightFormat::lowerCol;
+	edgeWeightFormatMap["UPPER_DIAG_COL"] = TSP::EdgeWeightFormat::upperDiagCol;
+	edgeWeightFormatMap["LOWER_DIAG_COL"] = TSP::EdgeWeightFormat::lowerDiagCol;
 }
 
 void TSPHeaderParser::initEdgeDataFormatMap()
 {
-	edgeDataFormatMap["EDGE_LIST"] = edgeList;
-	edgeDataFormatMap["ADJ_LIST"] = adjList;
+	edgeDataFormatMap["EDGE_LIST"] = TSP::EdgeDataFormat::edgeList;
+	edgeDataFormatMap["ADJ_LIST"] = TSP::EdgeDataFormat::adjList;
 }
 
 void TSPHeaderParser::initNodeCoordTypeMap()
 {
-	nodeCoordTypeMap["TWOD_COORDS"] = twodCoords;
-	nodeCoordTypeMap["THREED_COORDS"] = threedCoords;
-	nodeCoordTypeMap["NO_COORDS"] = noCoords;
+	nodeCoordTypeMap["TWOD_COORDS"] = TSP::NodeCoordType::twodCoords;
+	nodeCoordTypeMap["THREED_COORDS"] = TSP::NodeCoordType::threedCoords;
+	nodeCoordTypeMap["NO_COORDS"] = TSP::NodeCoordType::noCoords;
 }
 
 void TSPHeaderParser::initDisplayDataTypeMap()
 {
-	displayDataTypeMap["COORDS_DISPLAY"] = coordDisplay;
-	displayDataTypeMap["TWOD_DISPLAY"] = twodDisplay;
-	displayDataTypeMap["NO_DISPLAY"] = noDisplay;
+	displayDataTypeMap["COORDS_DISPLAY"] = TSP::DisplayDataType::coordDisplay;
+	displayDataTypeMap["TWOD_DISPLAY"] = TSP::DisplayDataType::twodDisplay;
+	displayDataTypeMap["NO_DISPLAY"] = TSP::DisplayDataType::noDisplay;
 }
 
 void TSPHeaderParser::setName(TSPHeader & header, std::string & value) const

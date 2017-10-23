@@ -11,7 +11,8 @@ protected:
 
 TEST_F(TSPHeaderParserTests, ParserShouldThrowInvalidArgumentIfUnknowParameterMeet)
 {
-	ASSERT_THROW(auto header = parser.parse("invalidArgumentString"), std::invalid_argument);
+	std::vector<std::string> s = { "invalidArgumentString" };
+	ASSERT_THROW(auto header = parser.parse(s), std::invalid_argument);
 };
 
 TEST_F(TSPHeaderParserTests, ParseNameString) 
@@ -71,78 +72,101 @@ TEST_F(TSPHeaderParserTests, ParseCapacity)
 TEST_F(TSPHeaderParserTests, ParseWeightType)
 {
 	auto header = parser.parse("EDGE_WEIGHT_TYPE : EXPLICIT");
-	ASSERT_EQ(header.getWeightType(), TSP::WeightType::explicitType);
+	auto result = header.getWeightType();
+	ASSERT_EQ(result, TSP::WeightType::explicitType);
 
 	header = parser.parse("EDGE_WEIGHT_TYPE : EUC_2D");
-	ASSERT_EQ(header.getWeightType(), TSP::WeightType::euclidean2d);
+	result = header.getWeightType();
+	ASSERT_EQ(result, TSP::WeightType::euclidean2d);
 
 	header = parser.parse("EDGE_WEIGHT_TYPE : EUC_3D");
-	ASSERT_EQ(header.getWeightType(), TSP::WeightType::euclidean3d);
+	result = header.getWeightType();
+	ASSERT_EQ(result, TSP::WeightType::euclidean3d);
 
 	header = parser.parse("EDGE_WEIGHT_TYPE : MAX_2D");
-	ASSERT_EQ(header.getWeightType(), TSP::WeightType::max2d);
+	result = header.getWeightType();
+	ASSERT_EQ(result, TSP::WeightType::max2d);
 
 	header = parser.parse("EDGE_WEIGHT_TYPE : MAX_3D");
-	ASSERT_EQ(header.getWeightType(), TSP::WeightType::max3d);
+	result = header.getWeightType();
+	ASSERT_EQ(result, TSP::WeightType::max3d);
 
 	header = parser.parse("EDGE_WEIGHT_TYPE : MAN_2D");
-	ASSERT_EQ(header.getWeightType(), TSP::WeightType::man2d);
+	result = header.getWeightType();
+	ASSERT_EQ(result, TSP::WeightType::man2d);
 
 	header = parser.parse("EDGE_WEIGHT_TYPE : MAN_3D");
-	ASSERT_EQ(header.getWeightType(), TSP::WeightType::man3d);
+	result = header.getWeightType();
+	ASSERT_EQ(result, TSP::WeightType::man3d);
 
 	header = parser.parse("EDGE_WEIGHT_TYPE : CEIL_2D");
-	ASSERT_EQ(header.getWeightType(), TSP::WeightType::ceil2d);
+	result = header.getWeightType();
+	ASSERT_EQ(result, TSP::WeightType::ceil2d);
 
 	header = parser.parse("EDGE_WEIGHT_TYPE : GEO");
-	ASSERT_EQ(header.getWeightType(), TSP::WeightType::geo);
+	result = header.getWeightType();
+	ASSERT_EQ(result, TSP::WeightType::geo);
 
 	header = parser.parse("EDGE_WEIGHT_TYPE : ATT");
-	ASSERT_EQ(header.getWeightType(), TSP::WeightType::att);
+	result = header.getWeightType();
+	ASSERT_EQ(result, TSP::WeightType::att);
 
 	header = parser.parse("EDGE_WEIGHT_TYPE : XRAY1");
-	ASSERT_EQ(header.getWeightType(), TSP::WeightType::xray1);
+	result = header.getWeightType();
+	ASSERT_EQ(result, TSP::WeightType::xray1);
 
 	header = parser.parse("EDGE_WEIGHT_TYPE : XRAY2");
-	ASSERT_EQ(header.getWeightType(), TSP::WeightType::xray2);
+	result = header.getWeightType();
+	ASSERT_EQ(result, TSP::WeightType::xray2);
 
 	header = parser.parse("EDGE_WEIGHT_TYPE : SPECIAL");
-	ASSERT_EQ(header.getWeightType(), TSP::WeightType::special);
+	result = header.getWeightType();
+	ASSERT_EQ(result, TSP::WeightType::special);
 
-	ASSERT_THROW(header = parser.parse("EDGE_WEIGHT_TYPE  : InvalidString"), std::invalid_argument);
+	ASSERT_THROW(header = parser.parse("EDGE_WEIGHT_TYPE  : InvalidString");, std::invalid_argument);
 }
 
 TEST_F(TSPHeaderParserTests, ParseEdgeWeightFormat)
 {
 	auto header = parser.parse("EDGE_WEIGHT_FORMAT : FUNCTION");
-	ASSERT_EQ(header.getEdgeWeightFormat(), TSP::EdgeWeightFormat::function);
+	auto result = header.getEdgeWeightFormat();
+	ASSERT_EQ(result, TSP::EdgeWeightFormat::function);
 
 	header = parser.parse("EDGE_WEIGHT_FORMAT : FULL_MATRIX");
-	ASSERT_EQ(header.getEdgeWeightFormat(), TSP::EdgeWeightFormat::fullMatrix);
+	result = header.getEdgeWeightFormat();
+	ASSERT_EQ(result, TSP::EdgeWeightFormat::fullMatrix);
 
 	header = parser.parse("EDGE_WEIGHT_FORMAT : UPPER_ROW");
-	ASSERT_EQ(header.getEdgeWeightFormat(), TSP::EdgeWeightFormat::upperRow);
+	result = header.getEdgeWeightFormat();
+	ASSERT_EQ(result, TSP::EdgeWeightFormat::upperRow);
 
 	header = parser.parse("EDGE_WEIGHT_FORMAT : LOWER_ROW");
-	ASSERT_EQ(header.getEdgeWeightFormat(), TSP::EdgeWeightFormat::lowerRow);
+	result = header.getEdgeWeightFormat();
+	ASSERT_EQ(result, TSP::EdgeWeightFormat::lowerRow);
 
 	header = parser.parse("EDGE_WEIGHT_FORMAT : UPPER_DIAG_ROW");
-	ASSERT_EQ(header.getEdgeWeightFormat(), TSP::EdgeWeightFormat::upperDiagRow);
+	result = header.getEdgeWeightFormat();
+	ASSERT_EQ(result, TSP::EdgeWeightFormat::upperDiagRow);
 
 	header = parser.parse("EDGE_WEIGHT_FORMAT : LOWER_DIAG_ROW");
-	ASSERT_EQ(header.getEdgeWeightFormat(), TSP::EdgeWeightFormat::lowerDiagRow);
+	result = header.getEdgeWeightFormat();
+	ASSERT_EQ(result, TSP::EdgeWeightFormat::lowerDiagRow);
 
 	header = parser.parse("EDGE_WEIGHT_FORMAT : UPPER_COL");
-	ASSERT_EQ(header.getEdgeWeightFormat(), TSP::EdgeWeightFormat::upperCol);
+	result = header.getEdgeWeightFormat();
+	ASSERT_EQ(result, TSP::EdgeWeightFormat::upperCol);
 
 	header = parser.parse("EDGE_WEIGHT_FORMAT : LOWER_COL");
-	ASSERT_EQ(header.getEdgeWeightFormat(), TSP::EdgeWeightFormat::lowerCol);
+	result = header.getEdgeWeightFormat();
+	ASSERT_EQ(result, TSP::EdgeWeightFormat::lowerCol);
 
 	header = parser.parse("EDGE_WEIGHT_FORMAT : UPPER_DIAG_COL");
-	ASSERT_EQ(header.getEdgeWeightFormat(), TSP::EdgeWeightFormat::upperDiagCol);
+	result = header.getEdgeWeightFormat();
+	ASSERT_EQ(result, TSP::EdgeWeightFormat::upperDiagCol);
 
 	header = parser.parse("EDGE_WEIGHT_FORMAT : LOWER_DIAG_COL");
-	ASSERT_EQ(header.getEdgeWeightFormat(), TSP::EdgeWeightFormat::lowerDiagCol);
+	result = header.getEdgeWeightFormat();
+	ASSERT_EQ(result, TSP::EdgeWeightFormat::lowerDiagCol);
 
 	ASSERT_THROW(header = parser.parse("EDGE_WEIGHT_FORMAT  : InvalidString"), std::invalid_argument);
 }
@@ -175,13 +199,13 @@ TEST_F(TSPHeaderParserTests, ParseNodeCoordType)
 TEST_F(TSPHeaderParserTests, ParseDisplayDataType)
 {
 	auto header = parser.parse("DISPLAY_DATA_TYPE : COORDS_DISPLAY");
-	ASSERT_EQ(header.getEdgeWeightFormat(), TSP::DisplayDataType::coordDisplay);
+	ASSERT_EQ(header.getDisplayDataType(), TSP::DisplayDataType::coordDisplay);
 
 	header = parser.parse("DISPLAY_DATA_TYPE : TWOD_DISPLAY");
-	ASSERT_EQ(header.getEdgeWeightFormat(), TSP::DisplayDataType::twodDisplay);
+	ASSERT_EQ(header.getDisplayDataType(), TSP::DisplayDataType::twodDisplay);
 
 	header = parser.parse("DISPLAY_DATA_TYPE : NO_DISPLAY");
-	ASSERT_EQ(header.getEdgeWeightFormat(), TSP::DisplayDataType::noDisplay);
+	ASSERT_EQ(header.getDisplayDataType(), TSP::DisplayDataType::noDisplay);
 
 	ASSERT_THROW(header = parser.parse("DISPLAY_DATA_TYPE : InvalidString"), std::invalid_argument);
 }

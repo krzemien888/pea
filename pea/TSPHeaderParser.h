@@ -9,7 +9,8 @@ public:
 	TSPHeaderParser();
 	~TSPHeaderParser() = default;
 
-	TSPHeader parse(std::string header);
+	TSPHeader parse(std::vector<std::string> text);
+	TSPHeader parse(std::string text);
 
 private:
 

@@ -40,14 +40,14 @@ public:
 
 private:
 	std::string name;
-	TSP::Type type;
+	TSP::Type type = TSP::Type::notSet;
 	std::string comment;
-	int dimension;
-	int capacity;
-	TSP::WeightType weightType;
-	TSP::EdgeWeightFormat edgeWeightFormat;
-	TSP::EdgeDataFormat edgeDataFormat;
-	TSP::NodeCoordType nodeCoordType;
-	TSP::DisplayDataType displayDataType;
+	int dimension = -1;
+	int capacity = -1;
+	TSP::WeightType weightType = TSP::WeightType::notSet;
+	TSP::EdgeWeightFormat edgeWeightFormat = TSP::EdgeWeightFormat::notSet;
+	TSP::EdgeDataFormat edgeDataFormat = TSP::EdgeDataFormat::notSet;
+	TSP::NodeCoordType nodeCoordType = TSP::NodeCoordType::notSet;
+	TSP::DisplayDataType displayDataType = TSP::DisplayDataType::notSet;
 };
 
