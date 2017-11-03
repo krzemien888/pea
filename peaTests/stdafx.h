@@ -11,5 +11,8 @@
 #include "peaInclude.h"
 #include "TSPHeaderParser.h"
 #include <sstream>
+#include <fstream>
+#include <utility>
+#include <string>
 
 // TODO: reference additional headers your program requires here
