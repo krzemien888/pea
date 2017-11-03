@@ -83,6 +83,8 @@ void TSPDataParser::readCoord(std::string & line)
 
 	rawData[index] = coords;
 
+
+
 	
 	if (header.getDimension() != -1)
 	{
