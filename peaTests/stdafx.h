@@ -9,7 +9,6 @@
 
 #include "gtest\gtest.h"
 #include "peaInclude.h"
-#include "TSPHeaderParser.h"
 #include <sstream>
 #include <fstream>
 #include <utility>

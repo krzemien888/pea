@@ -4,5 +4,6 @@
 #include "Application.h"
 #include "matrixGraph.h"
 #include "TSPDataParser.h"
+#include "TSPHeaderParser.h"
 #include "Action.h"
 #include "TSPFileReader.h"
