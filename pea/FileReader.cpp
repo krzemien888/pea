@@ -3,7 +3,14 @@
 
 void FileReader::setFileName(std::string name)
 {
-	fileName = name;
+	std::ifstream file(name, std::ifstream::in);
+
+	if (file.is_open() && file.good())
+		fileName = name;
+	else
+		throw std::invalid_argument("File couln't be opened");
+
+
 }
 
 void FileReader::removeSpace(std::string s)

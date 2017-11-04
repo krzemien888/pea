@@ -15,7 +15,7 @@ TEST(TSPFileReaderTest, ReaderShouldReturnProperMatrixGraphTSP)
 	tmpFile << "COMMENT : 52 locations in Berlin(Groetschel)\n";
 	tmpFile << "DIMENSION : 3\n";
 	tmpFile << "EDGE_WEIGHT_TYPE : EUC_2D\n";
-	tmpFile << "NODE_COORD_SECTION";
+	tmpFile << "NODE_COORD_SECTION\n";
 	tmpFile << "1 0 0\n";
 	tmpFile << "2 1 0\n";
 	tmpFile << "3 0 1\n";

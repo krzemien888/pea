@@ -25,7 +25,5 @@ private:
 	bool isDigit(const std::string &t_line) const;
 
 	matrixGraph m_graph;
-	
-
 };
 
