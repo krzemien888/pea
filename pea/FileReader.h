@@ -14,8 +14,8 @@ public:
 
 protected:
 	void removeSpace(std::string s);
-
-private:
 	std::string fileName;
+
+
 };
 

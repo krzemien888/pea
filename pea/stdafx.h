@@ -17,6 +17,7 @@
 #include <cstdlib>
 #include <sstream>
 #include <unordered_map>
+#include <fstream>
 
 
 #include "TSPEnums.h"

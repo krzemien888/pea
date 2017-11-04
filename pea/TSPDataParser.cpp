@@ -20,8 +20,6 @@ void TSPDataParser::parse(std::vector<std::string> text)
 		throw std::invalid_argument("Data parser error: Couldnt found function to calculate distance");
 	else
 		foundCalc->second(*this);
-
-	
 }
 
 matrixGraph TSPDataParser::getGraph()

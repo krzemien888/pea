@@ -21,6 +21,9 @@ TEST(TSPFileReaderTest, ReaderShouldReturnProperMatrixGraphTSP)
 	tmpFile << "3 0 1\n";
 	tmpFile << "EOF";
 
+	tmpFile.close();
+	
+
 	std::vector<std::vector<int>> graphMatrix = { { 0, 1, 1}, {1, 0, 1},{1,1,0} };
 	matrixGraph graph;
 	graph.setMatrix(graphMatrix);
@@ -30,6 +33,8 @@ TEST(TSPFileReaderTest, ReaderShouldReturnProperMatrixGraphTSP)
 	auto parsedGraph = reader.getData();
 
 	ASSERT_EQ(parsedGraph, graph);
+
+	remove("tmpFile.tsp");
 }
 
 TEST(TSPFileReaderTests, ReaderShouldCheckIfFileExists)
