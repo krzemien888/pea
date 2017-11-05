@@ -12,8 +12,8 @@ public:
 	~Application() = default;
 	void Run();
 	void Stop();
-private:
 	void addAction(Action action);
+private:
 	void printActions();
 	Action parseInput(std::string input);
 	bool running = false;

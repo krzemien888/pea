@@ -16,6 +16,9 @@
     <Filter Include="utilities\fileParser\TSP">
       <UniqueIdentifier>{122b45bf-7e67-42ff-bb91-b4db8d089c3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="algorithms">
+      <UniqueIdentifier>{dc189727-6682-4073-b80b-82134b948c8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Action.h">
@@ -52,6 +55,15 @@
     <ClInclude Include="TSPDataParser.h">
       <Filter>utilities\fileParser\TSP</Filter>
     </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicController.h" />
+    <ClInclude Include="IAlgorithm.h">
+      <Filter>algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicAlgorithm.h" />
+    <ClInclude Include="Result.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp">
@@ -83,5 +95,8 @@
     <ClCompile Include="TSPDataParser.cpp">
       <Filter>utilities\fileParser\TSP</Filter>
     </ClCompile>
+    <ClCompile Include="DynamicController.cpp" />
+    <ClCompile Include="DynamicAlgorithm.cpp" />
+    <ClCompile Include="Result.cpp" />
   </ItemGroup>
 </Project>

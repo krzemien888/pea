@@ -4,11 +4,6 @@
 
 Application::Application()
 {
-	addAction(Action(1, "Wyswietl graf", [this]() {
-		std::cout << graph << std::endl;
-		system("pause");
-	}));
-
 	addAction(Action(0, "Exit", [this](){
 		Stop();
 	}));
@@ -46,7 +41,10 @@ void Application::Stop()
 
 void Application::addAction(Action action)
 {
-	actions[action.getIndex()] = action;
+	if (actions.find(action.getIndex()) != actions.end())
+		throw std::invalid_argument("Action already registered");
+	else
+		actions[action.getIndex()] = action;
 }
 
 void Application::printActions()
