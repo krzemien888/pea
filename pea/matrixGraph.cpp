@@ -79,6 +79,16 @@ size_t matrixGraph::getSize() const
 	return _matrix.size();
 }
 
+std::string matrixGraph::getName()
+{
+	return m_name;
+}
+
+void matrixGraph::setName(std::string t_name)
+{
+	m_name = t_name;
+}
+
 bool matrixGraph::operator==(const matrixGraph & arg) const
 {
 	if (getSize() != arg.getSize())

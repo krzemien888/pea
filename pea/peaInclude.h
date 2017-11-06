@@ -7,3 +7,4 @@
 #include "TSPHeaderParser.h"
 #include "Action.h"
 #include "TSPFileReader.h"
+#include "DynamicAlgorithm.h"

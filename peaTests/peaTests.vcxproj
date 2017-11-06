@@ -168,6 +168,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DynamicAlgorithmTests.cpp" />
     <ClCompile Include="matrixGraphTests.cpp" />
     <ClCompile Include="peaTests.cpp" />
     <ClCompile Include="stdafx.cpp">

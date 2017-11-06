@@ -28,14 +28,20 @@ matrixGraph Controller::getGraph(std::string fileName)
 		throw std::invalid_argument("Controller: Parse error");
 	}
 
-	return tspParser.getData();
+	auto graph = tspParser.getData();
+	graph.setName(fileName);
+	return graph;
 }
 
 std::list<matrixGraph> Controller::getGraphList(std::string fileName)
 {
+	std::list<matrixGraph> output;
+	std::stringstream ss(fileName);
+	std::string line;
+	while (getline(ss, line))
+		output.push_back(getGraph(line));
 
-
-
+	return output;
 }
 
 std::string Controller::getFilenameFromUser()
@@ -59,5 +65,15 @@ std::string Controller::getFilenameFromUser()
 		}
 	}
 	return userInput;
+}
+
+void Controller::saveResult(Result & result)
+{
+	std::ofstream stream(result.fileName + "Answer.txt", std::ofstream::out);
+
+	if (stream.good())
+		stream << result.fileName << ";" << result.result << ";" << result.time << std::endl;
+	else
+		throw std::logic_error("Couldn't save solution for " + result.fileName);
 }
 

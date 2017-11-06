@@ -11,14 +11,30 @@ void DynamicController::applyOnFile()
 {
 	auto fileName = getFilenameFromUser();
 	auto graph = getGraph(fileName);
-	m_algh->apply(&graph);
+	auto result = m_algh->apply(&graph);
+	result.fileName = graph.getName();
+
+	system("cls");
+	std::cout << result;
+	system("pause");
 }
 
 void DynamicController::applyOnFileVector()
 {
 	auto fileName = getFilenameFromUser();
-	auto graph = getGraph(fileName);
-	m_algh->apply(&graph);
+	auto graphs = getGraphList(fileName);
+
+	std::list<Result> results;
+
+	for (auto &graph : graphs)
+	{
+		auto result = m_algh->apply(&graph);
+		result.fileName = graph.getName();
+		results.push_back(result);
+	}
+
+	for (auto &result : results)
+		saveResult(result);
 }
 
 void DynamicController::registerOptions()

@@ -3,5 +3,14 @@
 
 Result DynamicAlgorithm::apply(matrixGraph * graph)
 {
+
+
+
+
+
+
+
+
+
 	return Result();
 }
