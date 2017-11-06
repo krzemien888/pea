@@ -4,7 +4,7 @@
 #include "Application.h"
 #include "DynamicAlgorithm.h"
 
-class DynamicController :
+class DynamicController final:
 	public Controller
 {
 public:
@@ -18,6 +18,6 @@ public:
 private:
 	void applyAndPrint(std::string inputFile);
 	void applyAndSave(std::vector<std::string> inputFileVector, std::string outputFile);
-	void registerOptions();
+	virtual void registerOptions() override;
 };
 

@@ -47,6 +47,15 @@ void Application::addAction(Action action)
 		actions[action.getIndex()] = action;
 }
 
+int Application::getFreeActionIndex()
+{
+	int out = 1;
+	while (actions.find(out) != actions.end())
+		out++;
+
+	return out;
+}
+
 void Application::printActions()
 {
 	for (auto action : actions)

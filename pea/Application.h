@@ -13,6 +13,7 @@ public:
 	void Run();
 	void Stop();
 	void addAction(Action action);
+	int getFreeActionIndex();
 private:
 	void printActions();
 	Action parseInput(std::string input);
