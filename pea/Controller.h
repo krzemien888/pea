@@ -4,6 +4,9 @@
 #include "Application.h"
 #include "matrixGraph.h"
 
+class Application;
+class IAlghoritm;
+
 class Controller 
 {
 public:

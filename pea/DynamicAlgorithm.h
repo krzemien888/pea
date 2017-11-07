@@ -9,5 +9,6 @@ class DynamicAlgorithm final :
 public:
 	virtual ~DynamicAlgorithm() = default;
 	virtual Result apply(matrixGraph* graph) override;
+
 };
 

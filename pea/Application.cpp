@@ -11,6 +11,8 @@ Application::Application()
 	}));
 
 	controllers.push_back(std::make_shared<DynamicController>(this));
+
+	registerMenuOptions();
 }
 
 void Application::Run()
@@ -62,6 +64,12 @@ void Application::printActions()
 {
 	for (auto action : actions)
 		std::cout << action.first << ": " << action.second.getName() << std::endl;
+}
+
+void Application::registerMenuOptions()
+{
+	for (auto controller : controllers)
+		controller->registerOptions();
 }
 
 Action Application::parseInput(std::string input)

@@ -5,7 +5,6 @@
 Controller::Controller( Application * t_app,  IAlgorithm * t_algh)
 	: m_app(t_app), m_algh(t_algh)
 {
-	registerOptions();
 }
 
 Controller::~Controller()

@@ -15,7 +15,7 @@ public:
 	void applyOnFile();
 	void applyOnFileVector();
 
-private:
 	virtual void registerOptions() override;
+
 };
 
