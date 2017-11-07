@@ -58,12 +58,14 @@
     <ClInclude Include="Controller.h">
       <Filter>controllers</Filter>
     </ClInclude>
-    <ClInclude Include="DynamicController.h" />
     <ClInclude Include="IAlgorithm.h">
       <Filter>algorithms</Filter>
     </ClInclude>
     <ClInclude Include="DynamicAlgorithm.h" />
     <ClInclude Include="Result.h" />
+    <ClInclude Include="DynamicController.h">
+      <Filter>controllers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp">
@@ -95,10 +97,12 @@
     <ClCompile Include="TSPDataParser.cpp">
       <Filter>utilities\fileParser\TSP</Filter>
     </ClCompile>
-    <ClCompile Include="DynamicController.cpp" />
     <ClCompile Include="DynamicAlgorithm.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="Controller.cpp">
+      <Filter>controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicController.cpp">
       <Filter>controllers</Filter>
     </ClCompile>
   </ItemGroup>

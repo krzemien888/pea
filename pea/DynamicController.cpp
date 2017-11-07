@@ -3,7 +3,7 @@
 #include "TSPFileReader.h"
 
 
-DynamicController::DynamicController(Application * const app)
+DynamicController::DynamicController(Application * app)
 	: Controller(app, new DynamicAlgorithm)
 {}
 

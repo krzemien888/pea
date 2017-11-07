@@ -1,4 +1,5 @@
 #pragma once
+#include "stdafx.h"
 #include "IAlgorithm.h"
 #include "Application.h"
 #include "matrixGraph.h"
@@ -6,8 +7,8 @@
 class Controller 
 {
 public:
+	Controller( Application* t_app,  IAlgorithm* t_algh);
 	Controller() = delete;
-	Controller(Application * const t_app, IAlgorithm * const t_algh);
 	virtual ~Controller();
 	virtual void registerOptions() = 0;
 
@@ -19,6 +20,6 @@ protected:
 	void saveResult(Result &result);
 
 
-	Application* const m_app = nullptr;
-	IAlgorithm * const m_algh = nullptr;
+	Application*  m_app = nullptr;
+	IAlgorithm * m_algh = nullptr;
 };

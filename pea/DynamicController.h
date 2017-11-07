@@ -9,15 +9,13 @@ class DynamicController final:
 {
 public:
 	DynamicController() = delete;
-	DynamicController(Application * const app);
+	DynamicController(Application * app);
 	virtual ~DynamicController() = default;
 	
 	void applyOnFile();
 	void applyOnFileVector();
 
 private:
-	void applyAndPrint(std::string inputFile);
-	void applyAndSave(std::vector<std::string> inputFileVector, std::string outputFile);
 	virtual void registerOptions() override;
 };
 

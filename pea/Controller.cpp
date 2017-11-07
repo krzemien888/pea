@@ -2,7 +2,7 @@
 #include "Controller.h"
 #include "TSPFileReader.h"
 
-Controller::Controller(Application * const t_app, IAlgorithm * const t_algh)
+Controller::Controller( Application * t_app,  IAlgorithm * t_algh)
 	: m_app(t_app), m_algh(t_algh)
 {
 	registerOptions();

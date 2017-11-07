@@ -1,14 +1,16 @@
 #include "stdafx.h"
 #include "Application.h"
-
+#include "DynamicController.h"
 
 Application::Application()
 {
+	srand((unsigned int)time(NULL));
+
 	addAction(Action(0, "Exit", [this](){
 		Stop();
 	}));
 
-	srand((unsigned int)time(NULL));
+	controllers.push_back(std::make_shared<DynamicController>(this));
 }
 
 void Application::Run()
