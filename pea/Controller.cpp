@@ -13,6 +13,36 @@ Controller::~Controller()
 		delete m_algh;
 }
 
+void Controller::applyOnFile()
+{
+	auto fileName = getFilenameFromUser();
+	auto graph = getGraph(fileName);
+	auto result = m_algh->apply(&graph);
+	result.fileName = graph.getName();
+
+	system("cls");
+	std::cout << result;
+	system("pause");
+}
+
+void Controller::applyOnFileVector()
+{
+	auto fileName = getFilenameFromUser();
+	auto graphs = getGraphList(fileName);
+
+	std::list<Result> results;
+
+	for (auto &graph : graphs)
+	{
+		auto result = m_algh->apply(&graph);
+		result.fileName = graph.getName();
+		results.push_back(result);
+	}
+
+	for (auto &result : results)
+		saveResult(result);
+}
+
 matrixGraph Controller::getGraph(std::string fileName)
 {
 	TSPFileReader tspParser;

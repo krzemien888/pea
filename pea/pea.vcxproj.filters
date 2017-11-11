@@ -61,10 +61,20 @@
     <ClInclude Include="IAlgorithm.h">
       <Filter>algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="DynamicAlgorithm.h" />
-    <ClInclude Include="Result.h" />
     <ClInclude Include="DynamicController.h">
       <Filter>controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="BruteforceController.h">
+      <Filter>controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicAlgorithm.h">
+      <Filter>algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="BruteforceAlgorithm.h">
+      <Filter>algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="Result.h">
+      <Filter>structures</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -97,13 +107,23 @@
     <ClCompile Include="TSPDataParser.cpp">
       <Filter>utilities\fileParser\TSP</Filter>
     </ClCompile>
-    <ClCompile Include="DynamicAlgorithm.cpp" />
-    <ClCompile Include="Result.cpp" />
     <ClCompile Include="Controller.cpp">
       <Filter>controllers</Filter>
     </ClCompile>
     <ClCompile Include="DynamicController.cpp">
       <Filter>controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="BruteforceController.cpp">
+      <Filter>controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicAlgorithm.cpp">
+      <Filter>algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="BruteforceAlgorithm.cpp">
+      <Filter>algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="Result.cpp">
+      <Filter>structures</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

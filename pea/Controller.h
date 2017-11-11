@@ -14,6 +14,9 @@ public:
 	Controller() = delete;
 	virtual ~Controller();
 	virtual void registerOptions() = 0;
+	virtual void applyOnFile();
+	virtual void applyOnFileVector();
+
 
 protected:
 
@@ -21,7 +24,6 @@ protected:
 	std::list<matrixGraph> getGraphList(std::string fileName);
 	std::string getFilenameFromUser();
 	void saveResult(Result &result);
-
 
 	Application*  m_app = nullptr;
 	IAlgorithm * m_algh = nullptr;

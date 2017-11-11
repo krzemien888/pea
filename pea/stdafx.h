@@ -19,7 +19,10 @@
 #include <unordered_map>
 #include <fstream>
 #include <locale>
-
+#include <numeric>
+#include <iterator>
+#include <algorithm>
+#include <chrono>
 
 #include "TSPEnums.h"
 // TODO: reference additional headers your program requires here

@@ -8,3 +8,4 @@
 #include "Action.h"
 #include "TSPFileReader.h"
 #include "DynamicAlgorithm.h"
+#include "BruteforceAlgorithm.h"

@@ -11,5 +11,6 @@ public:
 	long int result;
 	long long int time;
 	friend std::ostream& operator<< (std::ostream& stream, const Result& r);
+	std::vector<int> path;
 };
 

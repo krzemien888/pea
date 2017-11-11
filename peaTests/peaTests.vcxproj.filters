@@ -44,5 +44,8 @@
     <ClCompile Include="DynamicAlgorithmTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BruteforceAlgorithmTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -154,6 +154,8 @@
   <ItemGroup>
     <ClInclude Include="Action.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BruteforceAlgorithm.h" />
+    <ClInclude Include="BruteforceController.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="DynamicAlgorithm.h" />
     <ClInclude Include="DynamicController.h" />
@@ -175,6 +177,8 @@
   <ItemGroup>
     <ClCompile Include="Action.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="BruteforceAlgorithm.cpp" />
+    <ClCompile Include="BruteforceController.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="DynamicAlgorithm.cpp" />
     <ClCompile Include="DynamicController.cpp" />

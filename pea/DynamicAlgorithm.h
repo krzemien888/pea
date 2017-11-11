@@ -11,4 +11,3 @@ public:
 	virtual Result apply(matrixGraph* graph) override;
 
 };
-

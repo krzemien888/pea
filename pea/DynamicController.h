@@ -11,9 +11,6 @@ public:
 	DynamicController() = delete;
 	DynamicController(Application * app);
 	virtual ~DynamicController() = default;
-	
-	void applyOnFile();
-	void applyOnFileVector();
 
 	virtual void registerOptions() override;
 
