@@ -19,10 +19,8 @@ private:
 	void setValue(int x, int y, int value);
 	void setPathValue(int x, int y, int value);
 
-	std::string cordToString(int x, int y);
-
 	int npow;
 	
-	std::unordered_map<std::string, int> valueMap;
-	std::unordered_map<std::string, int> pathMap;
+	std::vector<std::vector<int>> valueVector;
+	std::vector<std::vector<int>> pathVector;
 };

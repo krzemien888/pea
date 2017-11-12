@@ -10,6 +10,13 @@ Result DynamicAlgorithm::apply(matrixGraph * graph)
 	std::chrono::high_resolution_clock::time_point startTime;
 	std::chrono::high_resolution_clock::time_point endTime;
 
+	valueVector.resize(graph->getSize());
+	for (auto &v : valueVector)
+		v.resize(npow, -1);
+	pathVector.resize(graph->getSize());
+	for (auto &v : pathVector)
+		v.resize(npow, -1);
+
 	startTime = std::chrono::high_resolution_clock::now();
 
 	for (unsigned int i = 0; i < graph->getSize(); i++)
@@ -25,7 +32,7 @@ Result DynamicAlgorithm::apply(matrixGraph * graph)
 	output.fileName = graph->getName();
 	output.path = outputPath;
 	output.result = result;
-	output.time = (int)std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count();
+	output.time = (int)std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime).count();
 
 	return output;
 }
@@ -74,42 +81,20 @@ void DynamicAlgorithm::getPath(int start, int set, std::vector<int> &output)
 
 int DynamicAlgorithm::getValue(int x, int y)
 {
-	auto pair = cordToString(x, y);
-
-	auto fetched = valueMap.find(pair);
-
-	if (fetched == valueMap.end())
-		return -1;
-	else
-		return fetched->second;
+	return valueVector[x][y];
 }
 
 int DynamicAlgorithm::getPathValue(int x, int y)
 {
-	auto pair = cordToString(x, y);
-
-	auto fetched = pathMap.find(pair);
-
-	if (fetched == pathMap.end())
-		return -1;
-	else
-		return fetched->second;
+	return pathVector[x][y];
 }
 
 void DynamicAlgorithm::setValue(int x, int y, int value)
 {
-	valueMap[cordToString(x, y)] = value;
+	valueVector[x][y] = value;
 }
 
 void DynamicAlgorithm::setPathValue(int x, int y, int value)
 {
-	pathMap[cordToString(x, y)] = value;
-}
-
-std::string DynamicAlgorithm::cordToString(int x, int y)
-{
-	std::string output = std::to_string(x);
-	output.append("_");
-	output.append(std::to_string(y));
-	return output;
+	pathVector[x][y] = value;
 }
