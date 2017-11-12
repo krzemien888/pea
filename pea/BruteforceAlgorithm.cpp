@@ -16,10 +16,6 @@ Result BruteforceAlgorithm::apply(matrixGraph * graph)
 	startTime = std::chrono::high_resolution_clock::now();
 	while (std::next_permutation(currPermutation.begin(), currPermutation.end()))
 	{
-		if (currPermutation == dbgV)
-			;
-
-
 		if (isBetter(bestPermutation, currPermutation, graph))
 			bestPermutation = currPermutation;
 	}

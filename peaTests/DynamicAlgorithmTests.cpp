@@ -15,6 +15,7 @@ TEST(DynamicAlgorithmTests, AlgorithmShouldReturnProperRouteValue)
 	graph.setMatrix(v);
 
 	auto result = alg.apply(&graph);
-
+	std::vector<int> rightPath = { 0,1,3,2 };
+	ASSERT_EQ(result.path, rightPath);
 	ASSERT_EQ(result.result, 21);
 }

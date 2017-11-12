@@ -19,7 +19,7 @@ public:
 	std::string getName() const;
 	void Run();
 
-	bool operator<(Action other) const
+	bool operator<(Action &other) const
 	{
 		return actionIndex < other.getIndex();
 	}
