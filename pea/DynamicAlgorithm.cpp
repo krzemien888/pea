@@ -109,6 +109,7 @@ void DynamicAlgorithm::setPathValue(int x, int y, int value)
 std::string DynamicAlgorithm::cordToString(int x, int y)
 {
 	std::string output = std::to_string(x);
+	output.append("_");
 	output.append(std::to_string(y));
 	return output;
 }
