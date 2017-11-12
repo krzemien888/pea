@@ -31,3 +31,4 @@ TEST_F(TSPDataParserTests, GeneralCoordParseTest)
 
 	ASSERT_EQ(result, graph);
 }
+

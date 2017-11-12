@@ -55,13 +55,8 @@ bool TSPFileReader::isDataLine(const std::string & t_line) const
 
 bool TSPFileReader::isDigit(const std::string & t_line) const
 {
-	std::istringstream iss(t_line);
-	float f;
-	while (!iss.eof())
-	{
-		iss >> f;
-		if (iss.fail())
-			return false;
-	}
-	return true;
+	if (t_line[0] > 47 && t_line[0] < 58)
+		return true;
+	else
+		return false;
 }

@@ -8,7 +8,9 @@ void FileReader::setFileName(std::string name)
 	if (file.is_open() && file.good())
 		fileName = name;
 	else
-		throw std::invalid_argument("File couln't be opened");
+	{
+		throw std::invalid_argument("Nie udalo sie otworzyc pliku.");
+	}
 
 
 }

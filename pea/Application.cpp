@@ -22,6 +22,8 @@ void Application::Run()
 	std::string userInput;
 	while (running)
 	{
+		system("cls");
+
 		printActions();
 		std::cout << "Podaj opcje: ";
 		std::cin >> userInput;
@@ -81,7 +83,7 @@ Action Application::parseInput(std::string input)
 
 	if (userAction == actions.end())
 	{
-		throw std::invalid_argument("Nieprawid³owy argument");
+		throw std::invalid_argument("Nieprawidlowy argument");
 	}
 	else
 		return userAction->second;

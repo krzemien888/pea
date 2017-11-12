@@ -75,9 +75,17 @@ void TSPDataParser::readCoord(std::string & line)
 	
 	rawData.resize(header.getDimension());
 	
-	int coord;
+	float coord;
 	while (ss >> coord)
-		coords.push_back(coord);
+		coords.push_back((int)coord);
+
+
+	if (coords.size() != 2 || index == 9)
+	{
+		index++;
+		index--;
+
+	}
 
 	rawData[index] = coords;
 

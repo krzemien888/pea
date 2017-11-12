@@ -77,19 +77,18 @@ std::string Controller::getFilenameFromUser()
 {
 	std::string userInput;
 	TSPFileReader tspParser;
-	bool success = true;
-	while (success)
+	bool keepLoop = true;
+	while (keepLoop)
 	{
 		try {
 			std::cout << "Podaj nazwe pliku: ";
 			std::cin >> userInput;
 			tspParser.setFileName(userInput);
-			std::cout << 'n';
-			success = true;
+			keepLoop = false;
 		}
 		catch (std::invalid_argument)
 		{
-			success = false;
+			keepLoop = true;
 			std::cout << "Nie udalo sie otworzyc pliku " << userInput << ".\n";
 		}
 	}

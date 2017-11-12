@@ -16,14 +16,15 @@ public:
 	virtual matrixGraph getData();
 
 
-private:
 
 	bool isHeaderLine(const std::string &t_line) const;
 	bool isSectionLine(const std::string &t_line) const;
 	bool isDataLine(const std::string &t_line) const;
 
+private:
 	bool isDigit(const std::string &t_line) const;
 
+	
 	matrixGraph m_graph;
 };
 
