@@ -37,6 +37,7 @@ void TSPDataParser::initDistFuncMap()
 {
 	distFuncMap[TSP::WeightType::euclidean2d] = &TSPDataParser::calcEucl;
 	distFuncMap[TSP::WeightType::euclidean3d] = &TSPDataParser::calcEucl;
+	distFuncMap[TSP::WeightType::geo] = &TSPDataParser::calcEucl;
 }
 
 void TSPDataParser::initEdgeReadMap()

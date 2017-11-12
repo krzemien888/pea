@@ -2,14 +2,40 @@
 #include "matrixGraph.h"
 	
 
-matrixGraph matrixGraph::generate(const int vertexCount, const float density, const int minValue, const int maxValue)
+matrixGraph matrixGraph::generate(const int vertexCount, const bool symmetric, const int minValue, const int maxValue)
 {
 	matrixGraph m;
 	while (m.getSize() != vertexCount)
 		m.addVertex();
 
-	while (m.getDensity() != density)
-		m.setConnection(rand() % vertexCount, rand() % vertexCount, rand() % maxValue + minValue);
+	if (symmetric)
+	{
+		for(int x = 0; x < vertexCount; x++)
+			for (int y = x; y < vertexCount; y++)
+				if (x != y)
+				{
+					int value = rand() % maxValue + minValue;
+					m.setConnection(x, y, value);
+					m.setConnection(y, x, value);
+				}
+				else
+				{
+					m.setConnection(x, y, 0);
+				}
+	}
+	else
+	{
+		for (int x = 0; x < vertexCount; x++)
+			for (int y = 0; y < vertexCount; y++)
+				if (x != y)
+				{
+					m.setConnection(x, y, rand() % maxValue + minValue);
+				}
+				else
+				{
+					m.setConnection(x, y, 0);
+				}
+	}
 
 	return m;
 }

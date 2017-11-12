@@ -1,0 +1,5 @@
+bayg29.tsp 100
+bruma14.tsp 100
+ulysses16.tsp 100
+12 1 100
+15 0 100

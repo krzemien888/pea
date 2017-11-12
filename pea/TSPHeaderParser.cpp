@@ -116,7 +116,7 @@ void TSPHeaderParser::initNodeCoordTypeMap()
 
 void TSPHeaderParser::initDisplayDataTypeMap()
 {
-	displayDataTypeMap["COORDS_DISPLAY"] = TSP::DisplayDataType::coordDisplay;
+	displayDataTypeMap["COORD_DISPLAY"] = TSP::DisplayDataType::coordDisplay;
 	displayDataTypeMap["TWOD_DISPLAY"] = TSP::DisplayDataType::twodDisplay;
 	displayDataTypeMap["NO_DISPLAY"] = TSP::DisplayDataType::noDisplay;
 }

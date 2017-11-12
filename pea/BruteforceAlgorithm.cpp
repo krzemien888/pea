@@ -25,7 +25,7 @@ Result BruteforceAlgorithm::apply(matrixGraph * graph)
 	output.fileName = graph->getName();
 	output.path = bestPermutation;
 	output.result = calculateCost(bestPermutation, graph);
-	output.time = (int)std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime).count();
+	output.time = (int)std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 
 	return output;
 }

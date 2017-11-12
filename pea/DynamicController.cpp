@@ -15,4 +15,10 @@ void DynamicController::registerOptions()
 	m_app->addAction(Action(m_app->getFreeActionIndex(),
 							"Programowanie dynamiczne na plikach zapisanych w pliku",
 							std::bind(&DynamicController::applyOnFileVector, this)));
+	m_app->addAction(Action(m_app->getFreeActionIndex(),
+							"Programowanie dynamiczne na losowym grafie",
+							std::bind(&DynamicController::applyOnRandomGraph, this)));
+	m_app->addAction(Action(m_app->getFreeActionIndex(),
+							"Programowanie dynamiczne z zapisanych ustawien",
+							std::bind(&DynamicController::applyFromSettings, this)));
 }

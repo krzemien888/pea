@@ -19,7 +19,7 @@ private:
 	void setValue(int x, int y, int value);
 	void setPathValue(int x, int y, int value);
 
-	int npow;
+	long long int npow;
 	
 	std::vector<std::vector<int>> valueVector;
 	std::vector<std::vector<int>> pathVector;

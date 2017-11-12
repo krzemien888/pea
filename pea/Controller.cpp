@@ -2,6 +2,8 @@
 #include "Controller.h"
 #include "TSPFileReader.h"
 
+struct Controller::Setting;
+
 Controller::Controller( Application * t_app,  IAlgorithm * t_algh)
 	: m_app(t_app), m_algh(t_algh)
 {
@@ -41,6 +43,66 @@ void Controller::applyOnFileVector()
 
 	for (auto &result : results)
 		saveResult(result);
+}
+
+void Controller::applyOnRandomGraph()
+{
+	int cities;
+	int times;
+	char symmetric;
+	std::cout << "Liczba miast:";
+	std::cin >> cities;
+	std::cout << "\nLiczba przebiegow:";
+	std::cin >> times;
+	std::cout << "\n";
+	std::cout << "TSP[t/n]:";
+	std::cin >> symmetric;
+
+	system("cls");
+	auto result = generateAndRun(cities, times, symmetric=='t');
+
+	result.fileName = "randomGenerated";
+	std::cout << result;
+	system("pause");
+
+}
+
+void Controller::applyFromSettings()
+{
+	std::string filename = getFilenameFromUser();
+	auto settings = readSettings(filename);
+	auto graphVector = getGraphFromSettings(settings);
+
+	for (int i = 0; i < settings.size(); i++)
+	{
+		Result finalResult;
+		std::vector<long long int> times;
+		for (int x = 0; x < settings[i].times; x++)
+		{
+			system("cls");
+			if (settings[i].filename.empty())
+				std::cout << "Calculating random graph of " << settings[i].cities << "cities\n";
+			else
+				std::cout << "Calculating " << settings[i].filename << '\n';
+			std::cout << "Starting " << x + 1 << "out of 100";
+			auto tmpResult = m_algh->apply(&(graphVector[i]));
+			if (finalResult.path.empty())
+				finalResult = tmpResult;
+			times.push_back(tmpResult.time);
+		}
+
+		std::for_each(times.begin(), times.end(), [&](long long int n) {
+			finalResult.time += n;
+		});
+		
+		finalResult.time /= times.size();
+		if (finalResult.fileName.empty())
+			finalResult.fileName = "randomAnwer" + std::to_string(settings[i].cities);
+		else
+			finalResult.fileName.append("answer");
+
+		saveResult(finalResult);
+	}
 }
 
 matrixGraph Controller::getGraph(std::string fileName)
@@ -103,5 +165,67 @@ void Controller::saveResult(Result & result)
 		stream << result.fileName << ";" << result.result << ";" << result.time << std::endl;
 	else
 		throw std::logic_error("Couldn't save solution for " + result.fileName);
+}
+
+Result Controller::generateAndRun(int cities, int times, bool symmetric)
+{
+	matrixGraph graph = matrixGraph::generate(cities, symmetric);;
+	
+	auto result = m_algh->apply(&graph);
+	result.fileName = graph.getName();
+
+	std::cout << graph;
+	return result;
+}
+
+std::vector<Controller::Setting> Controller::readSettings(std::string & filename)
+{
+	std::ifstream file(filename, std::ifstream::in);
+	std::vector<Setting> settingVector;
+	std::string line;
+	if (file.is_open() && file.good())
+	{
+		while (getline(file, line))
+		{
+			std::stringstream ss(line);
+			Controller::Setting settings;
+			if (line[0] > 47 && line[0] < 58)
+			{
+				ss >> settings.cities;
+				ss >> settings.symmetric;
+			}
+			else
+			{
+				ss >> settings.filename;
+			}
+
+			ss >> settings.times;
+
+			settingVector.push_back(settings);
+		}
+	}
+	else
+		throw std::invalid_argument("Controller::readSettings: setting parse error.");
+
+	return settingVector;
+}
+
+std::vector<matrixGraph> Controller::getGraphFromSettings(std::vector<Setting>& settings)
+{
+	std::vector<matrixGraph> output;
+	for (auto &setting : settings)
+	{
+		matrixGraph graph;
+		if (!setting.filename.empty())
+		{
+			graph = getGraph(setting.filename);
+		}
+		else
+		{
+			graph = matrixGraph::generate(setting.cities, setting.symmetric);
+		}
+		output.push_back(graph);
+	}
+	return output;
 }
 

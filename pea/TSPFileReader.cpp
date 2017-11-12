@@ -55,7 +55,12 @@ bool TSPFileReader::isDataLine(const std::string & t_line) const
 
 bool TSPFileReader::isDigit(const std::string & t_line) const
 {
-	if (t_line[0] > 47 && t_line[0] < 58)
+	auto found = t_line.find_first_not_of(" ");
+
+	if (found == std::string::npos)
+		return false;
+
+	if (t_line[found] > 47 && t_line[found] < 58)
 		return true;
 	else
 		return false;

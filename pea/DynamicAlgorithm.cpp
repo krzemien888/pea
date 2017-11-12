@@ -10,12 +10,26 @@ Result DynamicAlgorithm::apply(matrixGraph * graph)
 	std::chrono::high_resolution_clock::time_point startTime;
 	std::chrono::high_resolution_clock::time_point endTime;
 
+	valueVector.clear();
+	pathVector.clear();
+
 	valueVector.resize(graph->getSize());
-	for (auto &v : valueVector)
-		v.resize(npow, -1);
 	pathVector.resize(graph->getSize());
-	for (auto &v : pathVector)
-		v.resize(npow, -1);
+
+	try {
+		for (auto &v : valueVector)
+			v.resize(npow, -1);
+		for (auto &v : pathVector)
+			v.resize(npow, -1);
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "Blad poczas alokowania pamieci\n";
+		std::cout << "vector max: " << valueVector.max_size() << "\n";
+		std::cout << "Given: " << npow << '\n';
+		system("pause");
+		throw e;
+	}
 
 	startTime = std::chrono::high_resolution_clock::now();
 
@@ -32,7 +46,7 @@ Result DynamicAlgorithm::apply(matrixGraph * graph)
 	output.fileName = graph->getName();
 	output.path = outputPath;
 	output.result = result;
-	output.time = (int)std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime).count();
+	output.time = (int)std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 
 	return output;
 }
