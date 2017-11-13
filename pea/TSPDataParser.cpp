@@ -45,6 +45,15 @@ void TSPDataParser::initEdgeReadMap()
 	edgeReadMap[TSP::EdgeWeightFormat::function] = &TSPDataParser::readCoord;
 	edgeReadMap[TSP::EdgeWeightFormat::notSet] = &TSPDataParser::readCoord;
 	edgeReadMap[TSP::EdgeWeightFormat::fullMatrix] = &TSPDataParser::readMatrix;
+	edgeReadMap[TSP::EdgeWeightFormat::upperRow] = &TSPDataParser::readMatrix;
+	edgeReadMap[TSP::EdgeWeightFormat::upperDiagRow] = &TSPDataParser::readMatrix;
+	edgeReadMap[TSP::EdgeWeightFormat::upperCol] = &TSPDataParser::readMatrix;
+	edgeReadMap[TSP::EdgeWeightFormat::upperDiagCol] = &TSPDataParser::readMatrix;
+	edgeReadMap[TSP::EdgeWeightFormat::lowerRow] = &TSPDataParser::readMatrix;
+	edgeReadMap[TSP::EdgeWeightFormat::lowerDiagRow] = &TSPDataParser::readMatrix;
+	edgeReadMap[TSP::EdgeWeightFormat::lowerCol] = &TSPDataParser::readMatrix;
+	edgeReadMap[TSP::EdgeWeightFormat::lowerDiagCol] = &TSPDataParser::readMatrix;
+
 }
 
 void TSPDataParser::calcEucl()
@@ -107,5 +116,50 @@ void TSPDataParser::readCoord(std::string & line)
 
 void TSPDataParser::readMatrix(std::string & line)
 {
-	throw std::logic_error("TSPDataParser::readMatrix: Not implemented yet");
+	switch (header.getEdgeWeightFormat()) {
+	case TSP::EdgeWeightFormat::fullMatrix: {
+		for (int i = 0; i < header.getDimension(); ++i) {
+			for (int j = 0; j < header.getDimension(); ++j) {
+				resultGraph.setConnection(i, j, rawVector[i * header.getDimension() + j]);
+			}
+		}
+		break;
+	}
+	case TSP::EdgeWeightFormat::upperRow:
+	case TSP::EdgeWeightFormat::upperDiagRow:
+	case TSP::EdgeWeightFormat::upperCol:
+	case TSP::EdgeWeightFormat::upperDiagCol: {
+		for (int i = 0; i < header.getDimension(); ++i) {
+			for (int j = header.getEdgeWeightFormat() == TSP::EdgeWeightFormat::upperDiagRow ? i : i + 1; j < header.getDimension(); ++j)
+			{
+				int col = header.getEdgeWeightFormat() == TSP::EdgeWeightFormat::upperDiagRow ? j : j - i - 1;
+				double weight = rawVector[i * header.getDimension() + col - i * (i + 1) / 2];
+				resultGraph.setConnection(i, j, weight);
+				resultGraph.setConnection(j, i, weight);
+			}
+		}
+		break;
+	}
+	case TSP::EdgeWeightFormat::lowerRow:
+	case TSP::EdgeWeightFormat::lowerDiagRow:
+	case TSP::EdgeWeightFormat::lowerCol:
+	case TSP::EdgeWeightFormat::lowerDiagCol:
+	{
+		for (int i = 0; i < header.getDimension(); ++i)
+		{
+			int cols = header.getEdgeWeightFormat() == TSP::EdgeWeightFormat::lowerDiagRow ? i : i - 1;
+			for (int j = 0; j <= cols; ++j)
+			{
+				int row = header.getEdgeWeightFormat() == TSP::EdgeWeightFormat::lowerDiagRow ? i : i - 1;
+				double weight = rawVector[row * header.getDimension() + j - (row * header.getDimension() - row * (row + 1) / 2)];
+				resultGraph.setConnection(i, j, weight);
+				resultGraph.setConnection(j, i, weight);
+			}
+		}
+		break;
+	}
+	default:
+		throw std::runtime_error("Parse error");
+
+	}
 }

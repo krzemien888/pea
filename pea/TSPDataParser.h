@@ -19,7 +19,8 @@ private:
 	TSPHeader header;
 	matrixGraph resultGraph;
 	std::vector<std::vector<int>> rawData;
-	
+	std::vector<int> rawVector;
+
 	void initMaps();
 	void initDistFuncMap();
 	void initEdgeReadMap();
