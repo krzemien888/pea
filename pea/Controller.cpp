@@ -119,6 +119,8 @@ void Controller::applyFromSettings()
 		}
 		else
 			throw std::logic_error("Couldn't save solution for " + finalResult.fileName);
+
+		stream.close();
 	}
 }
 
@@ -187,7 +189,12 @@ void Controller::saveResult(Result & result, bool app)
 	if (stream.good())
 		stream << result.fileName << ";" << result.result << ";" << result.time << std::endl;
 	else
+	{
+		stream.close();
 		throw std::logic_error("Couldn't save solution for " + result.fileName);
+	}
+
+	stream.close();
 }
 
 Result Controller::generateAndRun(int cities, int times, bool symmetric)
@@ -230,6 +237,7 @@ std::vector<Controller::Setting> Controller::readSettings(std::string & filename
 	else
 		throw std::invalid_argument("Controller::readSettings: setting parse error.");
 
+	file.close();
 	return settingVector;
 }
 
