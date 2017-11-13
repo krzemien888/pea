@@ -72,19 +72,20 @@ void Controller::applyFromSettings()
 	std::string filename = getFilenameFromUser();
 	auto settings = readSettings(filename);
 	auto graphVector = getGraphFromSettings(settings);
+	system("cls");
 
 	for (int i = 0; i < settings.size(); i++)
 	{
 		Result finalResult;
 		std::vector<long long int> times;
+		if (graphVector[i].isGenerated())
+			std::cout << "\nCalculating random graph of " << settings[i].cities << " cities\n";
+		else
+			std::cout << "Calculating " << settings[i].filename << '\n';
+
 		for (int x = 0; x < settings[i].times; x++)
 		{
-			system("cls");
-			if (settings[i].filename.empty())
-				std::cout << "Calculating random graph of " << settings[i].cities << " cities\n";
-			else
-				std::cout << "Calculating " << settings[i].filename << '\n';
-			std::cout << "Starting " << x + 1 << " out of " << settings[i].times;
+			std::cout << "Starting " << x + 1 << " out of " << settings[i].times << '\r';
 			auto tmpResult = m_algh->apply(&(graphVector[i]));
 			if (finalResult.path.empty())
 				finalResult = tmpResult;
@@ -97,14 +98,20 @@ void Controller::applyFromSettings()
 		
 		finalResult.time /= times.size();
 		
-		finalResult.fileName = filename + "solved.csv";
 
 		std::ofstream stream;	
-		stream.open(filename + "solved.csv", std::ofstream::out | std::ofstream::app);
+		stream.open(filename + "-solutions.csv", std::ofstream::out | std::ofstream::app);
 
 		if (stream.good())
 		{
-			stream << finalResult.fileName << ";" << finalResult.result << ";" << finalResult.time << ";";
+			if (graphVector[i].isGenerated())
+			{
+				stream << ((settings[i].symmetric) ? "tsp" : "atsp");
+				stream << settings[i].cities << ";";
+			}
+			else
+				stream << settings[i].filename << ";";
+			stream << finalResult.result << ";" << finalResult.time << ";";
 			for (auto &v : finalResult.path)
 				stream << v << '-';
 			stream << finalResult.path[0];
