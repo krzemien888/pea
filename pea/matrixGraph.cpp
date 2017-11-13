@@ -37,6 +37,7 @@ matrixGraph matrixGraph::generate(const int vertexCount, const bool symmetric, c
 				}
 	}
 
+	m.generated = true;
 	return m;
 }
 
@@ -126,6 +127,11 @@ bool matrixGraph::operator==(const matrixGraph & arg) const
 				return false;
 
 	return true;
+}
+
+bool matrixGraph::isGenerated() const
+{
+	return generated;
 }
 
 bool matrixGraph::isEmpty() const

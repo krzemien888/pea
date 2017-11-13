@@ -24,12 +24,14 @@ public:
 	void setName(std::string t_name);
 
 	bool operator==(const matrixGraph& arg) const;
-	
+	bool isGenerated() const;
+
 	friend std::ostream& operator<< (std::ostream& stream, const matrixGraph& m);
 	
 private:
 	std::vector<std::vector<int>> _matrix;
 	std::string m_name;
+	bool generated = false;
 
 	bool isEmpty() const;
 };
