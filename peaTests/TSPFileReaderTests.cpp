@@ -42,36 +42,3 @@ TEST(TSPFileReaderTests, ReaderShouldCheckIfFileExists)
 	TSPFileReader reader;
 	ASSERT_ANY_THROW(reader.setFileName("nonExistingFile.tsp"));
 }
-
-TEST(TSPFileReaderTests, ParserShouldProperlyDetectKindOfLine)
-{
-	std::ifstream file("berlin52.tsp", std::ifstream::in);
-	TSPFileReader reader;
-
-	std::vector<std::string> headerText, dataText;
-	std::string line;
-
-	if (file.is_open() && file.good())
-	{
-		TSPHeaderParser headerParser;
-
-		while (getline(file, line))
-		{
-			if (reader.isHeaderLine(line))
-				headerText.push_back(line);
-			else if (reader.isDataLine(line))
-				dataText.push_back(line);
-			else if (reader.isSectionLine(line))
-				continue;
-		}
-	}
-	else
-	{
-		FAIL() << "Test file berlin52.tsp couln't be open.";
-	}
-
-	file.close();
-
-	ASSERT_EQ(headerText.size(), 5);
-	ASSERT_EQ(dataText.size(), 52);
-}

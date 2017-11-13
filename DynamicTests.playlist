@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="DynamicAlgorithmTests.AlgorithmPathAndValueShouldBeSameAsBruteforce" /><Add Test="DynamicAlgorithmTests.AlgorithmShouldReturnProperRouteValue" /><Add Test="DynamicAlgorithmTests.ShouldSolveInstancegr21" /><Add Test="DynamicAlgorithmTests.ShouldSolveInstancegr17" /><Add Test="DynamicAlgorithmTests.ShouldSolveInstancegr24" /></Playlist>

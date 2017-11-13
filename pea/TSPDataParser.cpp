@@ -142,8 +142,8 @@ void TSPDataParser::calcMatrix()
 			{
 				int col = header.getEdgeWeightFormat() == TSP::EdgeWeightFormat::upperDiagRow ? j : j - i - 1;
 				double weight = rawVector[i * header.getDimension() + col - i * (i + 1) / 2];
-				resultGraph.setConnection(i, j, weight);
-				resultGraph.setConnection(j, i, weight);
+				resultGraph.setConnection(i, j, (int)weight);
+				resultGraph.setConnection(j, i, (int)weight);
 			}
 		}
 		break;
@@ -160,17 +160,13 @@ void TSPDataParser::calcMatrix()
 			{
 				int row = header.getEdgeWeightFormat() == TSP::EdgeWeightFormat::lowerDiagRow ? i : i - 1;
 				double weight = rawVector[row * header.getDimension() + j - (row * header.getDimension() - row * (row + 1) / 2)];
-				resultGraph.setConnection(i, j, weight);
-				resultGraph.setConnection(j, i, weight);
+				resultGraph.setConnection(i, j, (int)weight);
+				resultGraph.setConnection(j, i, (int)weight);
 			}
 		}
 		break;
 	}
 	default:
 		throw std::runtime_error("Parse error");
-
 	}
-
-	std::cout << resultGraph << '\n';
-	system("pause");
 }

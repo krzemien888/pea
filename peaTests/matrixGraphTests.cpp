@@ -28,7 +28,7 @@ TEST_F(matrixGraphTest, graphShouldBeAbleToBeGeneratedFrom2dVector)
 
 TEST_F(matrixGraphTest, graphShouldIncreaseSizeAfterVertexAddition)
 {
-	int oldSize = graph.getSize();
+	size_t oldSize = graph.getSize();
 
 	for(int i = 0; i < 5; i++)
 		graph.addVertex();
@@ -38,7 +38,7 @@ TEST_F(matrixGraphTest, graphShouldIncreaseSizeAfterVertexAddition)
 
 TEST_F(matrixGraphTest, graphShouldAccessDataAfterVertexAddition)
 {
-	int oldSize = graph.getSize();
+	size_t oldSize = graph.getSize();
 
 	for (int i = 0; i < 5; i++)
 		graph.addVertex();
@@ -96,7 +96,7 @@ TEST_F(matrixGraphTest, graphShouldBeGeneratedWithGivenVertexCount)
 
 TEST_F(matrixGraphTest, graphShouldBeGeneratedWithValuesBeetweenGivenRange)
 {
-	auto graph = matrixGraph::generate(10, 0.5);
+	auto graph = matrixGraph::generate(10, true);
 
 	int max = 0, min = 100;
 	for(unsigned int x = 0; x < graph.getSize(); x++)
@@ -110,11 +110,4 @@ TEST_F(matrixGraphTest, graphShouldBeGeneratedWithValuesBeetweenGivenRange)
 
 	ASSERT_TRUE(max <= 20);
 	ASSERT_TRUE(min >= 1);
-}
-
-TEST_F(matrixGraphTest, graphShouldBeGeneratedWithGivenDensity)
-{
-	auto graph = matrixGraph::generate(10, 0.50, 1, 20);
-
-	ASSERT_EQ(graph.getDensity(), 0.50);
 }

@@ -51,10 +51,10 @@ Result DynamicAlgorithm::apply(matrixGraph * graph)
 	return output;
 }
 
-int DynamicAlgorithm::getCost(int start, int set, matrixGraph* graph)
+int DynamicAlgorithm::getCost(int start, long long int set, matrixGraph* graph)
 {
-	int masked;
-	int mask;
+	long long int masked;
+	long long int mask;
 	int result = -1;
 	int temp;
 
@@ -81,34 +81,34 @@ int DynamicAlgorithm::getCost(int start, int set, matrixGraph* graph)
 	}
 }
 
-void DynamicAlgorithm::getPath(int start, int set, std::vector<int> &output)
+void DynamicAlgorithm::getPath(int start, long long int set, std::vector<int> &output)
 {
 	if (getPathValue(start, set) == -1)
 		return;
 
 	int x = getPathValue(start, set);
-	int mask = npow - 1 - (int)pow(2, x);
-	int masked = set&mask;
+	long long int mask = npow - 1 - (long long int)pow(2, x);
+	long long int masked = set&mask;
 	output.push_back(x);
 	getPath(x, masked, output);
 }
 
-int DynamicAlgorithm::getValue(int x, int y)
+int DynamicAlgorithm::getValue(long long int x, long long int y)
 {
 	return valueVector[x][y];
 }
 
-int DynamicAlgorithm::getPathValue(int x, int y)
+int DynamicAlgorithm::getPathValue(long long int x, long long int y)
 {
 	return pathVector[x][y];
 }
 
-void DynamicAlgorithm::setValue(int x, int y, int value)
+void DynamicAlgorithm::setValue(long long int x, long long int y, int value)
 {
 	valueVector[x][y] = value;
 }
 
-void DynamicAlgorithm::setPathValue(int x, int y, int value)
+void DynamicAlgorithm::setPathValue(long long int x, long long int y, int value)
 {
 	pathVector[x][y] = value;
 }

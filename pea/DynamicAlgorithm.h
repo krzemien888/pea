@@ -10,14 +10,14 @@ public:
 	virtual ~DynamicAlgorithm() = default;
 	virtual Result apply(matrixGraph* graph) override;
 private:
-	int getCost(int start, int set, matrixGraph* graph);
-	void getPath(int start, int set, std::vector<int> &output);
+	int getCost(int start, long long int set, matrixGraph* graph);
+	void getPath(int start, long long int set, std::vector<int> &output);
 
-	int getValue(int x, int y);
-	int getPathValue(int x, int y);
+	int getValue(long long int x, long long int y);
+	int getPathValue(long long int x, long long int y);
 
-	void setValue(int x, int y, int value);
-	void setPathValue(int x, int y, int value);
+	void setValue(long long int x, long long int y, int value);
+	void setPathValue(long long int x, long long int y, int value);
 
 	long long int npow;
 	

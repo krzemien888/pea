@@ -16,7 +16,7 @@ public:
 	void addVertex();
 	void addVertex(unsigned int newSize);
 
-	int getConnectionValue(const int from, const int to) const;
+	int getConnectionValue(const size_t from, const size_t to) const;
 	std::vector<int> getNeighbours(const int vectex) const; 
 	float getDensity() const;
 	size_t getSize() const ;

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GtaTestDurations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Executable>D:\Source\Libs\googletest\googletest\msvc\2010\gtest\x64-Release\gtest_prod_test.exe</Executable>
+  <TestDurations>
+    <TestDuration Test="PrivateCodeTest.CanAccessPrivateMembers" Duration="1" />
+    <TestDuration Test="PrivateCodeFixtureTest.CanAccessPrivateMembers" Duration="1" />
+  </TestDurations>
+</GtaTestDurations>

@@ -198,7 +198,7 @@ TEST_F(TSPHeaderParserTests, ParseNodeCoordType)
 
 TEST_F(TSPHeaderParserTests, ParseDisplayDataType)
 {
-	auto header = parser.parse("DISPLAY_DATA_TYPE : COORDS_DISPLAY");
+	auto header = parser.parse("DISPLAY_DATA_TYPE : COORD_DISPLAY");
 	ASSERT_EQ(header.getDisplayDataType(), TSP::DisplayDataType::coordDisplay);
 
 	header = parser.parse("DISPLAY_DATA_TYPE : TWOD_DISPLAY");

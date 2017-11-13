@@ -194,7 +194,7 @@ void TSPHeaderParser::setNodeCoordType(TSPHeader & header, std::string & value) 
 {
 	auto found = nodeCoordTypeMap.find(value);
 	if (found == nodeCoordTypeMap.end())
-		throw std::invalid_argument("Parse error: Invalid data format value");
+		throw std::invalid_argument("Parse error: Invalid node coord type value");
 	else
 		header.setNodeCoordType(found->second);
 }
@@ -203,7 +203,7 @@ void TSPHeaderParser::setDisplayDataType(TSPHeader & header, std::string & value
 {
 	auto found = displayDataTypeMap.find(value);
 	if (found == displayDataTypeMap.end())
-		throw std::invalid_argument("Parse error: Invalid data format value");
+		throw std::invalid_argument("Parse error: Invalid display data type value");
 	else
 		header.setDisplayDataType(found->second);
 }
@@ -217,7 +217,7 @@ void TSPHeaderParser::eraseSpaces(std::string & s)
 void TSPHeaderParser::splitSettingValueString(std::string & input, std::string & setting, std::string & value)
 {
 	eraseSpaces(input);
-	int delimeter = input.find(':');
+	size_t delimeter = input.find(':');
 	setting = input.substr(0, delimeter);
 	value = input.substr(delimeter + 1, input.size());
 }

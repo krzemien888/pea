@@ -76,7 +76,7 @@ void matrixGraph::addVertex(unsigned int newSize)
 		row.resize(newSize);
 }
 
-int matrixGraph::getConnectionValue(const int from, const int to) const
+int matrixGraph::getConnectionValue(const size_t from, const size_t to) const
 {
 	return _matrix[from][to];
 }
