@@ -99,7 +99,19 @@ void Controller::applyFromSettings()
 		
 		finalResult.fileName = filename + "solved.csv";
 
-		saveResult(finalResult, true);
+		std::ofstream stream;	
+		stream.open(filename + "solved.csv", std::ofstream::out | std::ofstream::app);
+
+		if (stream.good())
+		{
+			stream << finalResult.fileName << ";" << finalResult.result << ";" << finalResult.time;
+			for (auto &v : finalResult.path)
+				stream << v << '-';
+			stream << finalResult.path[0];
+			stream << std::endl;
+		}
+		else
+			throw std::logic_error("Couldn't save solution for " + finalResult.fileName);
 	}
 }
 
