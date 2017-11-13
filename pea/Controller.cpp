@@ -96,12 +96,10 @@ void Controller::applyFromSettings()
 		});
 		
 		finalResult.time /= times.size();
-		if (finalResult.fileName.empty())
-			finalResult.fileName = "randomAnwer" + std::to_string(settings[i].cities) + ((settings[i].symmetric)? "sym" : "asym");
-		else
-			finalResult.fileName.append("answer");
+		
+		finalResult.fileName = filename + "solved.csv";
 
-		saveResult(finalResult);
+		saveResult(finalResult, true);
 	}
 }
 
@@ -157,9 +155,15 @@ std::string Controller::getFilenameFromUser()
 	return userInput;
 }
 
-void Controller::saveResult(Result & result)
+void Controller::saveResult(Result & result, bool app)
 {
-	std::ofstream stream(result.fileName + "Answer.txt", std::ofstream::out);
+	
+	std::ofstream stream;
+
+	if (app)
+		stream.open(result.fileName + "Answer.txt", std::ofstream::out | std::ofstream::app);
+	else
+		stream.open(result.fileName + "Answer.txt", std::ofstream::out);
 
 	if (stream.good())
 		stream << result.fileName << ";" << result.result << ";" << result.time << std::endl;

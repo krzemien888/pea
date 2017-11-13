@@ -31,7 +31,7 @@ protected:
 	matrixGraph getGraph(std::string fileName);
 	std::list<matrixGraph> getGraphList(std::string fileName);
 	std::string getFilenameFromUser();
-	void saveResult(Result &result);
+	void saveResult(Result &result, bool app = false);
 
 	Result generateAndRun(int cities, int times, bool symmetric);
 	std::vector<Controller::Setting> readSettings(std::string & filename);
