@@ -104,7 +104,7 @@ void Controller::applyFromSettings()
 
 		if (stream.good())
 		{
-			stream << finalResult.fileName << ";" << finalResult.result << ";" << finalResult.time;
+			stream << finalResult.fileName << ";" << finalResult.result << ";" << finalResult.time << ";";
 			for (auto &v : finalResult.path)
 				stream << v << '-';
 			stream << finalResult.path[0];
