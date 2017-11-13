@@ -38,6 +38,7 @@ void TSPDataParser::initDistFuncMap()
 	distFuncMap[TSP::WeightType::euclidean2d] = &TSPDataParser::calcEucl;
 	distFuncMap[TSP::WeightType::euclidean3d] = &TSPDataParser::calcEucl;
 	distFuncMap[TSP::WeightType::geo] = &TSPDataParser::calcEucl;
+	distFuncMap[TSP::WeightType::explicitType] = &TSPDataParser::calcMatrix;
 }
 
 void TSPDataParser::initEdgeReadMap()
@@ -98,9 +99,6 @@ void TSPDataParser::readCoord(std::string & line)
 	}
 
 	rawData[index] = coords;
-
-
-
 	
 	if (header.getDimension() != -1)
 	{
@@ -116,6 +114,16 @@ void TSPDataParser::readCoord(std::string & line)
 
 void TSPDataParser::readMatrix(std::string & line)
 {
+	std::stringstream ss(line);
+	
+	int tmp;
+	while (ss >> tmp)
+		rawVector.push_back(tmp);
+}
+
+void TSPDataParser::calcMatrix()
+{
+	resultGraph.addVertex(header.getDimension());
 	switch (header.getEdgeWeightFormat()) {
 	case TSP::EdgeWeightFormat::fullMatrix: {
 		for (int i = 0; i < header.getDimension(); ++i) {
@@ -162,4 +170,7 @@ void TSPDataParser::readMatrix(std::string & line)
 		throw std::runtime_error("Parse error");
 
 	}
+
+	std::cout << resultGraph << '\n';
+	system("pause");
 }

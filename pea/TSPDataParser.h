@@ -26,9 +26,10 @@ private:
 	void initEdgeReadMap();
 
 	void calcEucl();
+	void calcMatrix();
 	
 	void readCoord(std::string& line);
-	void readMatrix(std::string& line);
+	void readMatrix(std::string &line);
 
 	std::unordered_map<TSP::WeightType, std::function<void(TSPDataParser&)>> distFuncMap;
 	std::unordered_map<TSP::EdgeWeightFormat, std::function<void(TSPDataParser&, std::string&)>> edgeReadMap;

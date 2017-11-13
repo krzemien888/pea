@@ -84,7 +84,7 @@ void Controller::applyFromSettings()
 				std::cout << "Calculating random graph of " << settings[i].cities << " cities\n";
 			else
 				std::cout << "Calculating " << settings[i].filename << '\n';
-			std::cout << "Starting " << x + 1 << " out of 100";
+			std::cout << "Starting " << x + 1 << " out of " << settings[i].times;
 			auto tmpResult = m_algh->apply(&(graphVector[i]));
 			if (finalResult.path.empty())
 				finalResult = tmpResult;

@@ -34,9 +34,6 @@
     <ClInclude Include="FileReader.h">
       <Filter>utilities\fileParser</Filter>
     </ClInclude>
-    <ClInclude Include="TSPDataParserFactory.h">
-      <Filter>utilities\fileParser\TSP</Filter>
-    </ClInclude>
     <ClInclude Include="TSPFileReader.h">
       <Filter>utilities\fileParser\TSP</Filter>
     </ClInclude>
@@ -44,9 +41,6 @@
       <Filter>utilities\fileParser\TSP</Filter>
     </ClInclude>
     <ClInclude Include="TSPHeaderParser.h">
-      <Filter>utilities\fileParser\TSP</Filter>
-    </ClInclude>
-    <ClInclude Include="TSPData.h">
       <Filter>utilities\fileParser\TSP</Filter>
     </ClInclude>
     <ClInclude Include="TSPEnums.h">
@@ -89,9 +83,6 @@
     <ClCompile Include="FileReader.cpp">
       <Filter>utilities\fileParser</Filter>
     </ClCompile>
-    <ClCompile Include="TSPDataParserFactory.cpp">
-      <Filter>utilities\fileParser\TSP</Filter>
-    </ClCompile>
     <ClCompile Include="TSPFileReader.cpp">
       <Filter>utilities\fileParser\TSP</Filter>
     </ClCompile>
@@ -99,9 +90,6 @@
       <Filter>utilities\fileParser\TSP</Filter>
     </ClCompile>
     <ClCompile Include="TSPHeaderParser.cpp">
-      <Filter>utilities\fileParser\TSP</Filter>
-    </ClCompile>
-    <ClCompile Include="TSPData.cpp">
       <Filter>utilities\fileParser\TSP</Filter>
     </ClCompile>
     <ClCompile Include="TSPDataParser.cpp">

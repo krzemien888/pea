@@ -19,3 +19,17 @@ TEST(DynamicAlgorithmTests, AlgorithmShouldReturnProperRouteValue)
 	ASSERT_EQ(result.path, rightPath);
 	ASSERT_EQ(result.result, 21);
 }
+
+TEST(DynamicAlgorithmTests, AlgorithmPathAndValueShouldBeSameAsBruteforce)
+{
+	DynamicAlgorithm algDP;
+	BruteforceAlgorithm algBrute;
+	auto graph = matrixGraph::generate(9, true);
+
+	auto dpResult = algDP.apply(&graph);
+	auto bruteResult = algBrute.apply(&graph);
+
+	ASSERT_EQ(dpResult.path, bruteResult.path);
+	ASSERT_EQ(dpResult.result, dpResult.result);
+
+}
