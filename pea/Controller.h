@@ -34,8 +34,8 @@ protected:
 	void saveResult(Result &result);
 
 	Result generateAndRun(int cities, int times, bool symmetric);
-	std::vector<Setting> readSettings(std::string & filename);
-	std::vector<matrixGraph> getGraphFromSettings(std::vector<Setting> &settings);
+	std::vector<Controller::Setting> readSettings(std::string & filename);
+	std::vector<matrixGraph> getGraphFromSettings(std::vector<Controller::Setting> &settings);
 
 	Application*  m_app = nullptr;
 	IAlgorithm * m_algh = nullptr;

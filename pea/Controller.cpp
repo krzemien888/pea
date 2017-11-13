@@ -81,10 +81,10 @@ void Controller::applyFromSettings()
 		{
 			system("cls");
 			if (settings[i].filename.empty())
-				std::cout << "Calculating random graph of " << settings[i].cities << "cities\n";
+				std::cout << "Calculating random graph of " << settings[i].cities << " cities\n";
 			else
 				std::cout << "Calculating " << settings[i].filename << '\n';
-			std::cout << "Starting " << x + 1 << "out of 100";
+			std::cout << "Starting " << x + 1 << " out of 100";
 			auto tmpResult = m_algh->apply(&(graphVector[i]));
 			if (finalResult.path.empty())
 				finalResult = tmpResult;
@@ -97,7 +97,7 @@ void Controller::applyFromSettings()
 		
 		finalResult.time /= times.size();
 		if (finalResult.fileName.empty())
-			finalResult.fileName = "randomAnwer" + std::to_string(settings[i].cities);
+			finalResult.fileName = "randomAnwer" + std::to_string(settings[i].cities) + ((settings[i].symmetric)? "sym" : "asym");
 		else
 			finalResult.fileName.append("answer");
 
