@@ -18,6 +18,7 @@ public:
 	virtual void applyOnFileVector();
 	virtual void applyOnRandomGraph();
 	virtual void applyFromSettings();
+	virtual std::string getAlgorithmName() = 0;
 
 protected:
 	struct Setting
@@ -36,7 +37,7 @@ protected:
 	Result generateAndRun(int cities, int times, bool symmetric);
 	std::vector<Controller::Setting> readSettings(std::string & filename);
 	std::vector<matrixGraph> getGraphFromSettings(std::vector<Controller::Setting> &settings);
-
+	
 	Application*  m_app = nullptr;
 	IAlgorithm * m_algh = nullptr;
 

@@ -100,7 +100,7 @@ void Controller::applyFromSettings()
 		
 
 		std::ofstream stream;	
-		stream.open(filename + "-solutions.csv", std::ofstream::out | std::ofstream::app);
+		stream.open(filename + "-solutions-"+getAlgorithmName()+".csv", std::ofstream::out | std::ofstream::app);
 
 		if (stream.good())
 		{
