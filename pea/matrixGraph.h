@@ -6,7 +6,7 @@ class matrixGraph
 {
 public:
 
-	static matrixGraph generate(const int vertexCount, const bool symmetric, const int minValue = 1, const int maxValue = 20);
+	static matrixGraph generate(const int vertexCount, const bool symmetric, const int minValue = 1, const int maxValue = 600);
 
 	matrixGraph() = default;
 	~matrixGraph() = default;

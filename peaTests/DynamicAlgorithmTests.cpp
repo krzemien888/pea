@@ -44,10 +44,7 @@ TEST(DynamicAlgorithmTests, ShouldSolveInstancegr17)
 
 	auto dpResult = algDP.apply(&graph);
 
-	std::vector<int> properPath = {
-		0,11,16,8,7,4,3,15,14,6,5,12,10,9,1,13,2 };
-	ASSERT_EQ(dpResult.path, properPath);
-	ASSERT_EQ(dpResult.result, 39);
+	ASSERT_EQ(dpResult.result, 2085);
 
 }
 
@@ -62,12 +59,7 @@ TEST(DynamicAlgorithmTests, ShouldSolveInstancegr21)
 
 	auto dpResult = algDP.apply(&graph);
 
-	std::vector<int> properPath = {
-				0, 15, 10, 2, 6, 5, 23, 7, 20, 4, 9, 16, 21, 17, 18, 14, 1, 19, 13, 12, 8, 22, 3, 11 };
-
-	ASSERT_EQ(dpResult.path, properPath);
 	ASSERT_EQ(dpResult.result, 2707);
-
 }
 
 TEST(DynamicAlgorithmTests, ShouldSolveInstancegr24)
@@ -80,10 +72,20 @@ TEST(DynamicAlgorithmTests, ShouldSolveInstancegr24)
 
 	auto dpResult = algDP.apply(&graph);
 
-	std::vector<int> properPath = {
-		0, 11,3,22,8,12,13,19,1,14,18,17,21,16,9,4,20,7,23,5,6,2,10,15 };
-
-	ASSERT_EQ(dpResult.path, properPath);
 	ASSERT_EQ(dpResult.result, 1272);
+
+}
+
+TEST(DynamicAlgorithmTests, ShouldSolveInstancebr17)
+{
+	DynamicAlgorithm algDP;
+	TSPFileReader reader;
+	reader.setFileName("br17.atsp");
+	reader.tryParse();
+	auto graph = reader.getData();
+
+	auto dpResult = algDP.apply(&graph);
+
+	ASSERT_EQ(dpResult.result, 39);
 
 }

@@ -93,21 +93,3 @@ TEST_F(matrixGraphTest, graphShouldBeGeneratedWithGivenVertexCount)
 
 	ASSERT_EQ(graph.getSize(), 10);
 }
-
-TEST_F(matrixGraphTest, graphShouldBeGeneratedWithValuesBeetweenGivenRange)
-{
-	auto graph = matrixGraph::generate(10, true);
-
-	int max = 0, min = 100;
-	for(unsigned int x = 0; x < graph.getSize(); x++)
-		for (unsigned int y = 0; y < graph.getSize(); y++)
-		{
-			if (graph.getConnectionValue(x, y) > max)
-				max = graph.getConnectionValue(x, y);
-			if (graph.getConnectionValue(x, y) < min && graph.getConnectionValue(x, y) != 0)
-				min = graph.getConnectionValue(x, y);
-		}
-
-	ASSERT_TRUE(max <= 20);
-	ASSERT_TRUE(min >= 1);
-}

@@ -6,7 +6,7 @@
 Result DynamicAlgorithm::apply(matrixGraph * graph)
 {
 	std::vector<int> outputPath;
-	npow = (int)pow(2, graph->getSize());;
+	npow = (long long int)pow(2, graph->getSize());;
 	std::chrono::high_resolution_clock::time_point startTime;
 	std::chrono::high_resolution_clock::time_point endTime;
 
@@ -27,13 +27,14 @@ Result DynamicAlgorithm::apply(matrixGraph * graph)
 		std::cout << "Blad poczas alokowania pamieci\n";
 		std::cout << "vector max: " << valueVector.max_size() << "\n";
 		std::cout << "Given: " << npow << '\n';
-		system("pause");
+		std::cout << e.what() << '\n';
 		throw e;
+		system("pause");
 	}
 
 	startTime = std::chrono::high_resolution_clock::now();
 
-	for (unsigned int i = 0; i < graph->getSize(); i++)
+	for (long long int i = 0; i < (long long int)graph->getSize(); i++)
 		setValue(i, 0, graph->getConnectionValue(i, 0));
 
 	int result = getCost(0, npow - 2, graph);
@@ -64,7 +65,7 @@ int DynamicAlgorithm::getCost(int start, long long int set, matrixGraph* graph)
 	{
 		for (int x = 0; x < (int)graph->getSize(); x++)
 		{
-			mask = npow - 1 - (int)pow(2, x);
+			mask = npow - 1 - (long long int)pow(2, x);
 			masked = set&mask;
 			if (masked != set)
 			{
