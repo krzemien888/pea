@@ -199,7 +199,7 @@ void Controller::saveResult(Result & result, bool app)
 
 Result Controller::generateAndRun(int cities, int times, bool symmetric)
 {
-	matrixGraph graph = matrixGraph::generate(cities, symmetric);;
+	matrixGraph graph = matrixGraph::generate(cities, symmetric);
 	
 	auto result = m_algh->apply(&graph);
 	result.fileName = graph.getName();

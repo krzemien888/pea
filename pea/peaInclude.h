@@ -9,3 +9,4 @@
 #include "TSPFileReader.h"
 #include "DynamicAlgorithm.h"
 #include "BruteforceAlgorithm.h"
+#include "TabuSearchAlgorithm.h"

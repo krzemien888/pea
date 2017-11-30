@@ -70,6 +70,12 @@
     <ClInclude Include="Result.h">
       <Filter>structures</Filter>
     </ClInclude>
+    <ClInclude Include="TabuSearchAlgorithm.h">
+      <Filter>algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="TabuSearchController.h">
+      <Filter>controllers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp">
@@ -112,6 +118,12 @@
     </ClCompile>
     <ClCompile Include="Result.cpp">
       <Filter>structures</Filter>
+    </ClCompile>
+    <ClCompile Include="TabuSearchAlgorithm.cpp">
+      <Filter>algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="TabuSearchController.cpp">
+      <Filter>controllers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

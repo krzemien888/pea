@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "DynamicController.h"
 #include "BruteforceController.h"
+#include "TabuSearchController.h"
 
 Application::Application()
 {
@@ -13,6 +14,7 @@ Application::Application()
 
 	controllers.push_back(std::make_shared<DynamicController>(this));
 	controllers.push_back(std::make_shared<BruteforceController>(this));
+	controllers.push_back(std::make_shared<TabuSearchController>(this));
 	registerMenuOptions();
 }
 
