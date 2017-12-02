@@ -24,7 +24,7 @@ Result DynamicAlgorithm::apply(matrixGraph * graph)
 	}
 	catch (std::exception &e)
 	{
-		std::cout << "Blad poczas alokowania pamieci\n";
+		std::cout << "Blad podczas alokowania pamieci\n";
 		std::cout << "vector max: " << valueVector.max_size() << "\n";
 		std::cout << "Given: " << npow << '\n';
 		std::cout << e.what() << '\n';

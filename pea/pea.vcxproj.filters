@@ -76,6 +76,7 @@
     <ClInclude Include="TabuSearchController.h">
       <Filter>controllers</Filter>
     </ClInclude>
+    <ClInclude Include="InstanceGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp">
@@ -124,6 +125,10 @@
     </ClCompile>
     <ClCompile Include="TabuSearchController.cpp">
       <Filter>controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="InstanceGenerator.cpp" />
+    <ClCompile Include="TSPEnums.cpp">
+      <Filter>utilities\fileParser\TSP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

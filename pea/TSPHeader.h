@@ -38,6 +38,8 @@ public:
 	TSP::DisplayDataType getDisplayDataType() const;
 	void setDisplayDataType(TSP::DisplayDataType newDataType);
 
+	friend std::ostream& operator<< (std::ostream& stream, const TSPHeader& h);
+
 private:
 	std::string name;
 	TSP::Type type = TSP::Type::notSet;

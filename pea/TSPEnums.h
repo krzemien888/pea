@@ -63,4 +63,10 @@ namespace TSP {
 		noDisplay
 	};
 
+	std::string toString(WeightType in);
+	std::string toString(EdgeWeightFormat in);
+	std::string toString(Type in);
+	std::string toString(EdgeDataFormat in);
+	std::string toString(NodeCoordType in);
+	std::string toString(DisplayDataType in);
 };

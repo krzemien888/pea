@@ -170,7 +170,8 @@ std::string Controller::getFilenameFromUser()
 		catch (std::invalid_argument)
 		{
 			keepLoop = true;
-			std::cout << "Nie udalo sie otworzyc pliku " << userInput << ".\n";
+			std::cout << "Nie udalo sie otworzyc pliku ";
+			std::cout << userInput << ".\n";
 		}
 	}
 	return userInput;

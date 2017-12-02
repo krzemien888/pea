@@ -101,3 +101,31 @@ void TSPHeader::setDisplayDataType(TSP::DisplayDataType newDataType)
 {
 	displayDataType = newDataType;
 }
+
+std::ostream & operator<<(std::ostream & stream, const TSPHeader & h)
+{
+	using namespace std;
+	using namespace TSP;
+	if(!h.getName().empty())
+		stream << "NAME:" << h.getName() << endl;
+	if (h.getType() != Type::notSet)
+		stream << "TYPE:" << toString(h.getType()) << endl;
+	if (!h.getComment().empty())
+		stream << "COMMENT:" << h.getComment() << endl;
+	if(h.getDimension() > 0)
+		stream << "DIMENSION:" << h.getDimension() << endl;
+	if (h.getCapacity() > 0)
+		stream << "CAPACITY:" << h.getCapacity() << endl;
+	if (h.getWeightType() != WeightType::notSet)
+		stream << "EDGE_WEIGHT_TYPE:" << toString(h.getWeightType()) << endl;
+	if(h.getEdgeWeightFormat() != EdgeWeightFormat::notSet)
+		stream << "EDGE_WEIGHT_FORMAT:" << toString(h.getEdgeWeightFormat()) << endl;
+	if (h.getEdgeDataFormat() != EdgeDataFormat::notSet)
+		stream << "EDGE_DATA_FORMAT:" << toString(h.getEdgeDataFormat()) << endl;
+	if (h.getNodeCoordType() != NodeCoordType::notSet)
+		stream << "NODE_COORD_TYPE:" << toString(h.getNodeCoordType()) << endl;
+	if (h.getDisplayDataType() != DisplayDataType::notSet)
+		stream << "DISPLAY_DATA_TYPE:" << toString(h.getDisplayDataType()) << endl;
+
+	return stream;
+}

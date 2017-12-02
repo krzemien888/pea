@@ -3,6 +3,7 @@
 #include "DynamicController.h"
 #include "BruteforceController.h"
 #include "TabuSearchController.h"
+#include "InstanceGenerator.h"
 
 Application::Application()
 {
@@ -10,6 +11,10 @@ Application::Application()
 
 	addAction(Action(0, "Exit", [this](){
 		Stop();
+	}));
+	addAction(Action(1, "Generate instance", []() {
+		InstanceGenerator gen;
+		gen.generate();
 	}));
 
 	controllers.push_back(std::make_shared<DynamicController>(this));
