@@ -160,7 +160,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\krzem\Source\Repos\pea\lib\gtest-x64-Release;$(SolutionLib)\lib\gtest-x64-Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\krzem\Source\Repos\pea\lib\gtest-x64-Release;D:\Source\Repos\pea\lib\gtest-x64-Release;$(SolutionLib)\lib\gtest-x64-Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ShowProgress>LinkVerboseLib</ShowProgress>
     </Link>
   </ItemDefinitionGroup>
