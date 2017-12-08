@@ -58,7 +58,7 @@ void TabuSearchAlgorithm::initTabu(size_t size)
 	for (auto &row : m_tabu)
 		row.resize(size);
 
-	startCadence = (int)floor(((float)size) / 2);
+	startCadence = size * 3;
 }
 
 std::vector<int> TabuSearchAlgorithm::getStartingSolution(size_t size)
