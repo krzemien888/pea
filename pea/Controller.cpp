@@ -172,6 +172,9 @@ std::string Controller::getFilenameFromUser()
 			keepLoop = true;
 			std::cout << "Nie udalo sie otworzyc pliku ";
 			std::cout << userInput << ".\n";
+
+			system("dir");
+
 		}
 	}
 	return userInput;

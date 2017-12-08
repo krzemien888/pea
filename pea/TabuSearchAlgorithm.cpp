@@ -14,8 +14,8 @@ Result TabuSearchAlgorithm::apply(matrixGraph * graph)
 
 	startTime = std::chrono::high_resolution_clock::now();
 
-	bool moved = false;
-	for(int i = 0; i < 20; i++)
+	int iterationsSinceSwitch = 0;
+	while(iterationsSinceSwitch < 100)
 	{
 
 		auto neighbourhood = getNeighbourhood(currBest);
@@ -28,7 +28,10 @@ Result TabuSearchAlgorithm::apply(matrixGraph * graph)
 			currBestValue = bestNeighbour.value;
 			bestMoveA = bestNeighbour.cityA;
 			bestMoveB = bestNeighbour.cityB;
+			iterationsSinceSwitch = 0;
 		}
+		else
+			iterationsSinceSwitch++;
 		
 		decrementTabu();
 		setTabu(bestMoveA, bestMoveB);
@@ -161,9 +164,9 @@ int TabuSearchAlgorithm::calculatePathValue(std::vector<int> path)
 	int result = 0;
 
 	for (int index = 0; index < path.size() -1 ; index++)
-		result += m_graph->getConnectionValue(index, index + 1);
+		result += m_graph->getConnectionValue(path[index], path[index + 1]);
 
-	result += m_graph->getConnectionValue(path.size() - 1, 0);
+	result += m_graph->getConnectionValue(path[path.size() - 1], path[0]);
 
 	return result;
 }
