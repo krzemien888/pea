@@ -17,8 +17,8 @@ private:
 
 	void initTabu(size_t size);
 	std::vector<int> getStartingSolution(size_t size);
-	std::vector<Neighbour> getNeighbourhood(std::vector<int> starter);
-	Neighbour getBestNeighbour(std::vector<Neighbour> solutions);
+	std::vector<Neighbour> getNeighbourhood(std::vector<int> &starter);
+	Neighbour getBestNeighbour(std::vector<Neighbour> &solutions);
 	int calculatePathValue(std::vector<int> path);
 
 	bool verifyTabuList(Neighbour& neighbour);
@@ -33,5 +33,7 @@ private:
 	std::vector <std::vector<int>> m_tabu;
 	int startCadence;
 	int iterationCount = 20;
+	bool isTabuFull = false;
+	bool isTabuEmpty = true;
 };
 
