@@ -11,33 +11,31 @@ Result TabuSearchAlgorithm::apply(matrixGraph * graph)
 
 	std::vector<int> currBest = getStartingSolution(graph->getSize());
 	int currBestValue = calculatePathValue(currBest);
+	
+	Neighbour bestNeighbour;
+	bestNeighbour.solution = currBest;
+	bestNeighbour.value = currBestValue;
 
 	startTime = std::chrono::high_resolution_clock::now();
 
 	int iterationsSinceSwitch = 0;
-	while(!isTabuFull && iterationsSinceSwitch < 100)
+	while(!isTabuFull && iterationsSinceSwitch < 10000)
 	{
-
-		auto neighbourhood = getNeighbourhood(currBest);
-		Neighbour bestNeighbour = getBestNeighbour(neighbourhood);
-		int bestMoveA = 0, bestMoveB = 0;
+		auto neighbourhood = getNeighbourhood(bestNeighbour);
+		bestNeighbour = getBestNeighbour(neighbourhood);
 		bool aspiration = false;
-	
 
-
-		if (bestNeighbour.value < currBestValue && verifyTabuList(bestNeighbour))
+		if (bestNeighbour.value < currBestValue)
 		{
 			currBest = bestNeighbour.solution;
 			currBestValue = bestNeighbour.value;
-			bestMoveA = bestNeighbour.cityA;
-			bestMoveB = bestNeighbour.cityB;
 			iterationsSinceSwitch = 0;
 		}
 		else
 			iterationsSinceSwitch++;
 		
 		decrementTabu();
-		setTabu(bestMoveA, bestMoveB);
+		setTabu(bestNeighbour);
 	}
 
 	endTime = std::chrono::high_resolution_clock::now();
@@ -70,13 +68,14 @@ std::vector<int> TabuSearchAlgorithm::getStartingSolution(size_t size)
 	return output;
 }
 
-std::vector<TabuSearchAlgorithm::Neighbour> TabuSearchAlgorithm::getNeighbourhood(std::vector<int> &starter)
+std::vector<TabuSearchAlgorithm::Neighbour> TabuSearchAlgorithm::getNeighbourhood(Neighbour &starter)
 {
 	std::vector<Neighbour> output;
 
-	for(int x = 0; x < starter.size(); x++)
-		for (int y = x + 1; y < starter.size(); y++)
-			output.push_back(neighbourBySwap(starter, x, y));
+	for(int x = 0; x < starter.solution.size(); x++)
+		for (int y = x + 1; y < starter.solution.size(); y++)
+			if(m_tabu[x][y] == 0)
+				output.push_back(neighbourBySwap(starter.solution, x, y));
 
 	return output;
 }
@@ -84,13 +83,9 @@ std::vector<TabuSearchAlgorithm::Neighbour> TabuSearchAlgorithm::getNeighbourhoo
 TabuSearchAlgorithm::Neighbour TabuSearchAlgorithm::getBestNeighbour(std::vector<Neighbour> &neighbourhood)
 {
 	Neighbour bestNeighbour = neighbourhood[0];
-	bool aspiration = false;
-
 	for (auto& neighbour : neighbourhood)
 		if (neighbour.value < bestNeighbour.value)
 			bestNeighbour = neighbour;
-
-
 	return bestNeighbour;
 }
 
@@ -129,6 +124,11 @@ void TabuSearchAlgorithm::setTabu(int cityA, int cityB)
 {
 	m_tabu[cityA][cityB] += startCadence;
 	m_tabu[cityB][cityA] += startCadence;
+}
+
+void TabuSearchAlgorithm::setTabu(Neighbour & neighbour)
+{
+	setTabu(neighbour.cityA, neighbour.cityB);
 }
 
 TabuSearchAlgorithm::Neighbour TabuSearchAlgorithm::neighbourByInsert(std::vector<int> solution, int a, int b)

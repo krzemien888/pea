@@ -17,13 +17,14 @@ private:
 
 	void initTabu(size_t size);
 	std::vector<int> getStartingSolution(size_t size);
-	std::vector<Neighbour> getNeighbourhood(std::vector<int> &starter);
-	Neighbour getBestNeighbour(std::vector<Neighbour> &solutions);
+	std::vector<TabuSearchAlgorithm::Neighbour> getNeighbourhood(Neighbour & starter);
+	TabuSearchAlgorithm::Neighbour getBestNeighbour(std::vector<Neighbour>& neighbourhood);
 	int calculatePathValue(std::vector<int> path);
 
 	bool verifyTabuList(Neighbour& neighbour);
 	void decrementTabu();
 	void setTabu(int cityA, int cityB);
+	void setTabu(Neighbour &neighbour);
 
 	Neighbour neighbourByInsert(std::vector<int> solution, int a, int b);
 	Neighbour neighbourBySwap(std::vector<int> solution, int a, int b);
