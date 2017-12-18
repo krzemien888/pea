@@ -7,6 +7,7 @@ public:
 	virtual ~BruteforceAlgorithm() = default;
 
 	virtual Result apply(matrixGraph * graph) override;
+	virtual std::string toString() override;
 
 private:
 	bool isBetter(std::vector<int>& best, std::vector<int> &curr, matrixGraph* graph);
