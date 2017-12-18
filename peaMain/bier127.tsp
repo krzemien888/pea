@@ -1,5 +1,5 @@
 NAME : bier127
-COMMENT : 127 Biergaerten in Augsburg (Juenger/Reinelt)
+COMMENT : 118282
 TYPE : TSP
 DIMENSION : 127
 EDGE_WEIGHT_TYPE : EUC_2D
