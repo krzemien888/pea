@@ -1,0 +1,11 @@
+ulysses22.tsp 100
+ulysses16.tsp 100
+gr24.tsp 100
+gr21.tsp 100
+gr17.tsp 100
+bruma14.tsp 100
+bayg29.tsp 100
+a280.tsp 100
+att48.tsp 100
+bier127.tsp 100
+rat783.tsp 100
