@@ -58,6 +58,7 @@ void TabuSearchAlgorithm::initTabu(size_t size)
 	for (auto &row : m_tabu)
 		row.resize(size);
 
+	tabuSize = size * 3;
 	startCadence = size * 3;
 }
 

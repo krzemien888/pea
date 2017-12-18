@@ -33,5 +33,6 @@ private:
 	std::vector <std::vector<int>> m_tabu;
 	int startCadence;
 	int iterationCount = 20;
+	int tabuSize;
 };
 
