@@ -15,8 +15,23 @@ private:
 		std::vector<int> solution;
 	};
 
+	struct TabuEntry
+	{
+		int cityA, cityB, value;
+
+		bool operator==(const TabuEntry &entry)
+		{
+			return cityA == entry.cityA && cityB == entry.cityB && value == entry.value;
+		}
+	};
+
+	enum class NeighbourhoodType {
+		Insert,Invert,Swap
+	};
+
 	void initTabu(size_t size);
 	std::vector<int> getStartingSolution(size_t size);
+	std::vector<int> getRandomSolution(size_t size);
 	std::vector<Neighbour> getNeighbourhood(std::vector<int> &starter);
 	Neighbour getBestNeighbour(std::vector<Neighbour> &solutions);
 	int calculatePathValue(std::vector<int> path);
@@ -30,10 +45,11 @@ private:
 	Neighbour neighbourByInvert(std::vector<int> solution, int a, int b);
 
 	matrixGraph * m_graph;
-	std::vector <std::vector<int>> m_tabu;
+	std::list<TabuSearchAlgorithm::TabuEntry> m_tabu;
 	int startCadence;
 	int iterationCount = 20;
-	bool isTabuFull = false;
-	bool isTabuEmpty = true;
+	size_t tabuSize;
+
+	NeighbourhoodType selectedType = NeighbourhoodType::Invert;
 };
 
