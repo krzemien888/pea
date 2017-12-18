@@ -7,6 +7,9 @@ public:
 	virtual Result apply(matrixGraph* graph) override;
 	virtual ~TabuSearchAlgorithm() = default;
 
+	void setNeighbourhoodGenerationMethod(std::string method);
+	void setTabuListSize(size_t size);
+	void setCadenceLenght(int cadence);
 private:
 
 	struct Neighbour
@@ -32,7 +35,7 @@ private:
 	void initTabu(size_t size);
 	std::vector<int> getStartingSolution(size_t size);
 	std::vector<int> getRandomSolution(size_t size);
-	std::vector<Neighbour> getNeighbourhood(std::vector<int> &starter);
+	std::vector<Neighbour> getNeighbourhood(std::vector<int> &starter, const int currBestValue);
 	Neighbour getBestNeighbour(std::vector<Neighbour> &solutions);
 	int calculatePathValue(std::vector<int> path);
 
@@ -46,9 +49,9 @@ private:
 
 	matrixGraph * m_graph;
 	std::list<TabuSearchAlgorithm::TabuEntry> m_tabu;
-	int startCadence;
+	int startCadence = 0;
 	int iterationCount = 20;
-	size_t tabuSize;
+	size_t tabuSize = 0;
 
 	NeighbourhoodType selectedType = NeighbourhoodType::Invert;
 };
