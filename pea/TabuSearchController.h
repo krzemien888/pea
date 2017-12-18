@@ -7,8 +7,11 @@ public:
 	TabuSearchController() = delete;
 	TabuSearchController(Application * app);
 	virtual ~TabuSearchController() = default;
-
+	
 	virtual std::string getAlgorithmName() override;
 	virtual void registerOptions() override;
+	virtual void applyFromSettings() override;
+
+	
 };
 

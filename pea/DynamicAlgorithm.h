@@ -9,6 +9,7 @@ class DynamicAlgorithm final :
 public:
 	virtual ~DynamicAlgorithm() = default;
 	virtual Result apply(matrixGraph* graph) override;
+	virtual std::string toString() override;
 private:
 	int getCost(int start, long long int set, matrixGraph* graph);
 	void getPath(int start, long long int set, std::vector<int> &output);

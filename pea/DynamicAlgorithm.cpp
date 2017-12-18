@@ -52,6 +52,11 @@ Result DynamicAlgorithm::apply(matrixGraph * graph)
 	return output;
 }
 
+std::string DynamicAlgorithm::toString()
+{
+	return "DP";
+}
+
 int DynamicAlgorithm::getCost(int start, long long int set, matrixGraph* graph)
 {
 	long long int masked;

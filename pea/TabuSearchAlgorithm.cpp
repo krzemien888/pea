@@ -31,7 +31,7 @@ Result TabuSearchAlgorithm::apply(matrixGraph * graph)
 		localBest = bestNeighbour.solution;
 		int bestMoveA = 0, bestMoveB = 0;
 	
-		if (bestNeighbour.value < currBestValue)
+		if (bestNeighbour.value < currBestValue && bestNeighbour.value != 0)
 		{
 			currBest = bestNeighbour.solution;
 			currBestValue = bestNeighbour.value;
@@ -80,12 +80,35 @@ void TabuSearchAlgorithm::setCadenceLenght(int cadence)
 	startCadence = cadence;
 }
 
+std::string TabuSearchAlgorithm::toString()
+{
+	std::string output;
+
+	output.append(std::to_string(tabuSize));
+	output.append("-");
+	output.append(std::to_string(startCadence));
+	output.append("-");
+	switch (selectedType)
+	{
+	case NeighbourhoodType::Swap:
+		output.append("swap");
+		break;
+	case NeighbourhoodType::Insert:
+		output.append("insert");
+		break;
+	case NeighbourhoodType::Invert:
+		output.append("invert");
+		break;
+	}
+	return output;
+}
+
 void TabuSearchAlgorithm::initTabu(size_t size)
 {
 
-	if(tabuSize != 0)
+	if(tabuSize == 0)
 		tabuSize = size * 3;
-	if(startCadence != 0)
+	if(startCadence == 0)
 		startCadence = (int)floor(((float)size) / 2);
 }
 

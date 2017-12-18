@@ -10,6 +10,8 @@ public:
 	void setNeighbourhoodGenerationMethod(std::string method);
 	void setTabuListSize(size_t size);
 	void setCadenceLenght(int cadence);
+
+	virtual std::string toString() override;
 private:
 
 	struct Neighbour

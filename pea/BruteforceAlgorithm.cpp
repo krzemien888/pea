@@ -30,6 +30,11 @@ Result BruteforceAlgorithm::apply(matrixGraph * graph)
 	return output;
 }
 
+std::string BruteforceAlgorithm::toString()
+{
+	return "BruteForce";
+}
+
 bool BruteforceAlgorithm::isBetter(std::vector<int>& best, std::vector<int>& curr, matrixGraph * graph)
 {
 	if (best.size() != curr.size())
