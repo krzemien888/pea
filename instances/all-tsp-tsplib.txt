@@ -8,4 +8,3 @@ bayg29.tsp 100
 a280.tsp 100
 st70.tsp 100
 bier127.tsp 100
-rat783.tsp 100
