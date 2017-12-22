@@ -6,7 +6,9 @@ class GeneticAlgorithm :
 	public IAlgorithm
 {
 public:
-	GeneticAlgorithm();
-	~GeneticAlgorithm();
+	virtual ~GeneticAlgorithm() = default;
+
+	virtual Result apply(matrixGraph* graph) override;
+	virtual std::string toString() override;
 };
 

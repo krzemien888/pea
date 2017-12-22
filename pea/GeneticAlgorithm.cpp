@@ -2,11 +2,12 @@
 #include "GeneticAlgorithm.h"
 
 
-GeneticAlgorithm::GeneticAlgorithm()
+Result GeneticAlgorithm::apply(matrixGraph * graph)
 {
+	return Result();
 }
 
-
-GeneticAlgorithm::~GeneticAlgorithm()
+std::string GeneticAlgorithm::toString()
 {
+	return std::string();
 }
