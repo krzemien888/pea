@@ -77,6 +77,10 @@
       <Filter>controllers</Filter>
     </ClInclude>
     <ClInclude Include="InstanceGenerator.h" />
+    <ClInclude Include="GeneticAlgorithm.h">
+      <Filter>algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneticController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp">
@@ -130,5 +134,9 @@
     <ClCompile Include="TSPEnums.cpp">
       <Filter>utilities\fileParser\TSP</Filter>
     </ClCompile>
+    <ClCompile Include="GeneticAlgorithm.cpp">
+      <Filter>algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneticController.cpp" />
   </ItemGroup>
 </Project>

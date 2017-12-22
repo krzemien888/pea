@@ -163,6 +163,8 @@
     <ClInclude Include="DynamicAlgorithm.h" />
     <ClInclude Include="DynamicController.h" />
     <ClInclude Include="FileReader.h" />
+    <ClInclude Include="GeneticAlgorithm.h" />
+    <ClInclude Include="GeneticController.h" />
     <ClInclude Include="IAlgorithm.h" />
     <ClInclude Include="InstanceGenerator.h" />
     <ClInclude Include="matrixGraph.h" />
@@ -187,6 +189,8 @@
     <ClCompile Include="DynamicAlgorithm.cpp" />
     <ClCompile Include="DynamicController.cpp" />
     <ClCompile Include="FileReader.cpp" />
+    <ClCompile Include="GeneticAlgorithm.cpp" />
+    <ClCompile Include="GeneticController.cpp" />
     <ClCompile Include="InstanceGenerator.cpp" />
     <ClCompile Include="matrixGraph.cpp" />
     <ClCompile Include="Result.cpp" />
