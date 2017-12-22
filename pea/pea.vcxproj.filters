@@ -80,7 +80,9 @@
     <ClInclude Include="GeneticAlgorithm.h">
       <Filter>algorithms</Filter>
     </ClInclude>
-    <ClInclude Include="GeneticController.h" />
+    <ClInclude Include="GeneticController.h">
+      <Filter>controllers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp">
@@ -137,6 +139,8 @@
     <ClCompile Include="GeneticAlgorithm.cpp">
       <Filter>algorithms</Filter>
     </ClCompile>
-    <ClCompile Include="GeneticController.cpp" />
+    <ClCompile Include="GeneticController.cpp">
+      <Filter>controllers</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
