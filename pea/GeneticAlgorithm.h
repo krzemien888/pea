@@ -27,7 +27,7 @@ public:
 	CrossoverType getCrossoverType() const;
 
 	// Population operations
-	Population trimPopulation();
+	Population trimPopulation(Population & populationToTrim);
 	Population crossoverPopulation(std::list<std::pair<Individual, Individual>> & selectedParents);
 	Population mutatePopulation(Population & population);
 	std::list<std::pair<Individual, Individual>> selectParents();
@@ -43,6 +43,8 @@ public:
 
 	// Mutate operators
 
+	// Initialize methods
+	void initPopulation();
 private:
 
 	// Properties
@@ -57,7 +59,6 @@ private:
 	Population m_population;
 
 	// Initialize methods
-	void initPopulation();
 	std::pair<Individual, Individual> crossover(Individual & firstParent, Individual & secondParent);
 	bool verifyEndingCondition(const int & generationCount, const int & generationWithoutImprovementCount);
 };
@@ -68,6 +69,8 @@ struct Individual
 	std::vector<int> genotype;
 	int cost;
 	bool operator>(const Individual& other) const;
+
+	void setGenotype(std::vector<int> newGenotype, matrixGraph * graph);
 };
 
 enum class CrossoverType {

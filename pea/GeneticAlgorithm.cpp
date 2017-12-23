@@ -19,10 +19,8 @@ Result GeneticAlgorithm::apply(matrixGraph * graph)
 		auto selected = selectParents();
 		auto newPopulation = crossoverPopulation(selected);
 		newPopulation = mutatePopulation(newPopulation);
-
-		m_population = newPopulation;
 			
-		trimPopulation();
+		m_population = trimPopulation(newPopulation);
 
 		if (bestIndividual > m_population.getFittest())
 			bestIndividual = m_population.getFittest();
@@ -43,6 +41,46 @@ std::string GeneticAlgorithm::toString()
 	return std::string();
 }
 
+void GeneticAlgorithm::setPopulationLimit(const int newPopulationLimit)
+{
+	m_populationLimit = newPopulationLimit;
+}
+
+int GeneticAlgorithm::getPopulationLimit() const
+{
+	return m_populationLimit;
+}
+
+void GeneticAlgorithm::setGenerationLimit(const int newGenerationLimit)
+{
+	m_generationLimit = newGenerationLimit;
+}
+
+int GeneticAlgorithm::getGenerationLimit() const
+{
+	return m_generationLimit;
+}
+
+void GeneticAlgorithm::setGenerationsWithoutImprovementLimit(const int newLimit)
+{
+	m_generationsWithoutImprovementLimit = newLimit;
+}
+
+int GeneticAlgorithm::getGenerationswithoutImprovementLimit() const
+{
+	return m_generationsWithoutImprovementLimit;
+}
+
+void GeneticAlgorithm::setCrossoverType(const CrossoverType & selectedType)
+{
+	m_crossoverType = selectedType;
+}
+
+CrossoverType GeneticAlgorithm::getCrossoverType() const
+{
+	return m_crossoverType;
+}
+
 bool GeneticAlgorithm::verifyEndingCondition(const int & generationCount, const int & generationWithoutImprovementCount)
 {
 	return generationCount < m_generationLimit && generationWithoutImprovementCount < m_generationsWithoutImprovementLimit;
@@ -51,4 +89,15 @@ bool GeneticAlgorithm::verifyEndingCondition(const int & generationCount, const 
 bool Individual::operator>(const Individual & other) const
 {
 	return cost > other.cost;
+}
+
+void Individual::setGenotype(std::vector<int> newGenotype, matrixGraph * graph)
+{
+	genotype = newGenotype;
+	cost = 0;
+
+	for (int index = 0; index < genotype.size() - 1; index++)
+		cost += graph->getConnectionValue(genotype[index], genotype[index + 1]);
+
+	cost += graph->getConnectionValue(genotype[genotype.size() - 1], genotype[0]);
 }

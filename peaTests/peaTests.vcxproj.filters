@@ -50,5 +50,8 @@
     <ClCompile Include="TabuSearchAlgorithmTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GenericAlgorithmTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
