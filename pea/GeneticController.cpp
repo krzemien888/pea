@@ -25,7 +25,7 @@ void GeneticController::registerOptions()
 
 void GeneticController::applyFromSettings()
 {
-	std::string filename = getFilenameFromUser();
+	/*std::string filename = getFilenameFromUser();
 	auto settings = readSettings(filename);
 	auto graphVector = getGraphFromSettings(settings);
 	system("cls");
@@ -98,7 +98,7 @@ void GeneticController::applyFromSettings()
 			throw std::logic_error("Couldn't save solution for " + filename + "-solutions-" + getAlgorithmName() + ".csv");
 
 		stream.close();
-		results.clear();
-	}
+		results.clear();*/
+	//}
 
 }

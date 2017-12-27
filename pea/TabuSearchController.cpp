@@ -71,7 +71,7 @@ void TabuSearchController::applyFromSettings()
 		std::for_each(results.begin(), results.end(), [&](Result r) {
 			avgResult.result += r.result;
 		});
-		avgResult.result /= results.size();
+		avgResult.result /= (long)results.size();
 
 		std::ofstream stream;
 		stream.open(filename + "-solutions-" + getAlgorithmName() + ".csv", std::ofstream::out | std::ofstream::app);
