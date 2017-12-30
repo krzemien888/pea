@@ -1,42 +1,35 @@
 #include "stdafx.h"
-#include "TabuSearchController.h"
-#include "TabuSearchAlgorithm.h"
+#include "GeneticController.h"
+#include "GeneticAlgorithm.h"
 
-
-TabuSearchController::TabuSearchController(Application * app) : Controller(app, new TabuSearchAlgorithm)
+GeneticController::GeneticController(Application * app) : Controller(app, new GeneticAlgorithm)
 {
 }
 
-std::string TabuSearchController::getAlgorithmName()
+std::string GeneticController::getAlgorithmName()
 {
 	std::string output("TabuSearch-");
 	output.append(m_algh->toString());
 	return output;
 }
 
-void TabuSearchController::registerOptions()
+void GeneticController::registerOptions()
 {
 	m_app->addAction(Action(m_app->getFreeActionIndex(),
-		"Przeszukiwanie z zakazami na pojedynczym pliku",
-		std::bind(&TabuSearchController::applyOnFile, this)));
+		"Algorytm genetyczny na pojedynczym pliku",
+		std::bind(&GeneticController::applyOnFile, this)));
 	m_app->addAction(Action(m_app->getFreeActionIndex(),
-		"Przeszukiwanie z zakazami na plikach zapisanych w pliku",
-		std::bind(&TabuSearchController::applyOnFileVector, this)));
-	m_app->addAction(Action(m_app->getFreeActionIndex(),
-		"Przeszukiwanie z zakazami na losowym grafie",
-		std::bind(&TabuSearchController::applyOnRandomGraph, this)));
-	m_app->addAction(Action(m_app->getFreeActionIndex(),
-		"Przeszukiwanie z zakazami z zapisanych ustawien",
-		std::bind(&TabuSearchController::applyFromSettings, this)));
+		"Algorytm genetyczny z zapisanych ustawien",
+		std::bind(&GeneticController::applyFromSettings, this)));
 }
 
-void TabuSearchController::applyFromSettings()
+void GeneticController::applyFromSettings()
 {
-	std::string filename = getFilenameFromUser();
+	/*std::string filename = getFilenameFromUser();
 	auto settings = readSettings(filename);
 	auto graphVector = getGraphFromSettings(settings);
 	system("cls");
-	
+
 	std::vector<Result> results;
 	Result tmpResult;
 
@@ -71,7 +64,7 @@ void TabuSearchController::applyFromSettings()
 		std::for_each(results.begin(), results.end(), [&](Result r) {
 			avgResult.result += r.result;
 		});
-		avgResult.result /= (long)results.size();
+		avgResult.result /= results.size();
 
 		std::ofstream stream;
 		stream.open(filename + "-solutions-" + getAlgorithmName() + ".csv", std::ofstream::out | std::ofstream::app);
@@ -90,13 +83,13 @@ void TabuSearchController::applyFromSettings()
 			for (auto &v : worstResult.path)
 				stream << v << '-';
 			stream << worstResult.path[0] << ";";
-			
+
 
 			stream << bestResult.result << ";" << bestResult.time << ";";
 			for (auto &v : bestResult.path)
 				stream << v << '-';
 			stream << bestResult.path[0] << ";";
-			
+
 
 			stream << avgResult.result << ";" << avgResult.time << ";";
 			stream << std::endl;
@@ -105,7 +98,7 @@ void TabuSearchController::applyFromSettings()
 			throw std::logic_error("Couldn't save solution for " + filename + "-solutions-" + getAlgorithmName() + ".csv");
 
 		stream.close();
-		results.clear();
-	}
-}
+		results.clear();*/
+	//}
 
+}

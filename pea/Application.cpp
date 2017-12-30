@@ -4,6 +4,7 @@
 #include "BruteforceController.h"
 #include "TabuSearchController.h"
 #include "InstanceGenerator.h"
+#include "GeneticController.h"
 
 Application::Application()
 {
@@ -20,6 +21,7 @@ Application::Application()
 	controllers.push_back(std::make_shared<DynamicController>(this));
 	controllers.push_back(std::make_shared<BruteforceController>(this));
 	controllers.push_back(std::make_shared<TabuSearchController>(this));
+	controllers.push_back(std::make_shared<GeneticController>(this));
 	registerMenuOptions();
 }
 

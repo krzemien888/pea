@@ -10,3 +10,4 @@
 #include "DynamicAlgorithm.h"
 #include "BruteforceAlgorithm.h"
 #include "TabuSearchAlgorithm.h"
+#include "GeneticAlgorithm.h"

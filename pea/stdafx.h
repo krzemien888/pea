@@ -25,6 +25,7 @@
 #include <chrono>
 #include <unordered_set>
 #include <limits>
+#include <queue>
 
 #include "TSPEnums.h"
 // TODO: reference additional headers your program requires here

@@ -171,6 +171,7 @@
   <ItemGroup>
     <ClCompile Include="BruteforceAlgorithmTests.cpp" />
     <ClCompile Include="DynamicAlgorithmTests.cpp" />
+    <ClCompile Include="GenericAlgorithmTests.cpp" />
     <ClCompile Include="matrixGraphTests.cpp" />
     <ClCompile Include="peaTests.cpp" />
     <ClCompile Include="stdafx.cpp">
