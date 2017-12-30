@@ -4,7 +4,18 @@
 
 Result GeneticAlgorithm::apply(matrixGraph * graph)
 {
+	using namespace std;
+	setGraph(graph);
+
+	// Initial settings
+	setPopulationLimit(graph->getSize() * 3);
+	setGenerationLimit(pow(graph->getSize(), 3));
+	setGenerationsWithoutImprovementLimit(graph->getSize() * 10);
+
+
+	cout << "Generating initial population\n";
 	initPopulation(graph);
+	cout << "Population generated\n";
 	int generationCount = 0;
 	int generationsWithoutImprovement = 0;
 	std::chrono::high_resolution_clock::time_point startTime;
@@ -12,6 +23,13 @@ Result GeneticAlgorithm::apply(matrixGraph * graph)
 
 
 	Individual bestIndividual = m_population.getFittest();
+	cout << "Current best solution: ";
+	
+	for (auto x : bestIndividual.genotype)
+		cout << x << " ";
+	cout << " : " << bestIndividual.cost << endl;
+
+	cout << "Starting main loop\n";
 
 	startTime = std::chrono::high_resolution_clock::now();
 	while (verifyEndingCondition(generationCount, generationsWithoutImprovement))
@@ -23,7 +41,23 @@ Result GeneticAlgorithm::apply(matrixGraph * graph)
 		m_population = trimPopulation(newPopulation);
 
 		if (bestIndividual > m_population.getFittest())
+		{
 			bestIndividual = m_population.getFittest();
+			cout << "New best solution: ";
+
+			for (auto x : bestIndividual.genotype)
+				cout << x << " ";
+			cout << " : " << bestIndividual.cost << endl;
+			 
+			cout << "Generation nr: " << generationCount << "\n";
+			generationsWithoutImprovement = 0;
+		}
+		else {
+			generationsWithoutImprovement++;
+
+		}
+
+		generationCount++;
 	}
 	endTime = std::chrono::high_resolution_clock::now();
 
@@ -97,6 +131,20 @@ void GeneticAlgorithm::setGraph(matrixGraph * graph)
 	m_graph = graph;
 }
 
+std::vector<int> GeneticAlgorithm::getRandomSolution(size_t size)
+{
+	std::vector<int> tmp(size), output;
+	std::iota(std::begin(tmp), std::end(tmp), 0);
+	while (!tmp.empty())
+	{
+		int index = rand() % tmp.size();
+		output.push_back(tmp[index]);
+		tmp.erase(tmp.begin() + index);
+	}
+
+	return output;
+}
+
 void GeneticAlgorithm::setCrossoverType(const CrossoverType & selectedType)
 {
 	m_crossoverType = selectedType;
@@ -119,17 +167,53 @@ Population GeneticAlgorithm::trimPopulation(Population & populationToTrim)
 
 Population GeneticAlgorithm::crossoverPopulation(std::list<std::pair<Individual, Individual>>& selectedParents)
 {
-	return Population();
+	Population output;
+	switch (getCrossoverType())
+	{
+	case CrossoverType::OX:
+
+		break;
+	case CrossoverType::CX:
+		break;
+	case CrossoverType::PMX:
+		for (auto parent : selectedParents)
+		{
+			int a = rand() % m_graph->getSize();
+			int b = rand() % m_graph->getSize();
+
+			if (a > b)
+				std::swap(a, b);
+
+			auto children = partialMappedCrossover(parent.first, parent.second, a, b );
+			output.add(children.first);
+			output.add(children.second);
+		}
+		break;
+	}
+	return output;
 }
 
 Population GeneticAlgorithm::mutatePopulation(Population & population)
 {
-	return Population();
+	return population;
 }
 
 std::list<std::pair<Individual, Individual>> GeneticAlgorithm::selectParents()
 {
-	return std::list<std::pair<Individual, Individual>>();
+	std::list<std::pair<Individual, Individual>> output;
+
+	auto currPopulation = getSortedPopulation();
+
+	while (output.size() < m_populationLimit/2)
+	{
+		auto first = currPopulation.front();
+		currPopulation.pop_front();
+		auto second = currPopulation.front();
+		currPopulation.pop_front();
+		output.push_back(std::make_pair(first, second));
+	}
+	
+	return output;
 }
 
 std::list<Individual> GeneticAlgorithm::getSortedPopulation()
@@ -271,22 +355,19 @@ std::pair<Individual, Individual> GeneticAlgorithm::cycleCrossover(Individual & 
 
 void GeneticAlgorithm::initPopulation(matrixGraph* graph)
 {
-	std::vector<int> seed = getGreedySolution(graph);
+	Individual greedy;
+	greedy.setGenotype(getGreedySolution(graph), graph);
 
 	while(m_population.m_populationQueue.size() < getPopulationLimit())
 	{
 		Individual newIndividual;
-		newIndividual.setGenotype(seed, graph);
-		m_population.m_populationQueue.push(newIndividual);
 
-		if (!std::next_permutation(seed.begin(), seed.end()))
-		{
-			throw std::logic_error("Population limit to huge for graph instance");
-		}
+		newIndividual.setGenotype(getRandomSolution(graph->getSize()), graph);
+		m_population.m_populationQueue.push(newIndividual);
 	}
 }
 
 Individual Population::getFittest() const
 {
-	return Individual();
+	return m_populationQueue.top();
 }

@@ -16,10 +16,10 @@ std::string GeneticController::getAlgorithmName()
 void GeneticController::registerOptions()
 {
 	m_app->addAction(Action(m_app->getFreeActionIndex(),
-		"Przeszukiwanie z zakazami na pojedynczym pliku",
+		"Algorytm genetyczny na pojedynczym pliku",
 		std::bind(&GeneticController::applyOnFile, this)));
 	m_app->addAction(Action(m_app->getFreeActionIndex(),
-		"Przeszukiwanie z zakazami z zapisanych ustawien",
+		"Algorytm genetyczny z zapisanych ustawien",
 		std::bind(&GeneticController::applyFromSettings, this)));
 }
 

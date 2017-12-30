@@ -18,6 +18,7 @@ struct Population
 {
 	std::priority_queue<Individual, std::vector<Individual>, std::greater<Individual>> m_populationQueue;
 	Individual getFittest() const;
+	void add(Individual toAdd) { m_populationQueue.push(toAdd); };
 };
 
 class GeneticAlgorithm :
@@ -42,6 +43,8 @@ public:
 	int getGenerationswithoutImprovementLimit() const;
 
 	void setGraph(matrixGraph* graph);
+
+	std::vector<int> getRandomSolution(size_t size);
 
 	void setCrossoverType(const CrossoverType & selectedType);
 	CrossoverType getCrossoverType() const;
@@ -73,14 +76,13 @@ private:
 	int m_populationLimit;
 	int m_generationLimit;
 	int m_generationsWithoutImprovementLimit;
-	CrossoverType m_crossoverType;
+	CrossoverType m_crossoverType = CrossoverType::PMX;
 
 	// Inner data properies
 	Population m_population;
 	matrixGraph* m_graph = nullptr;
 
 	// Initialize methods
-	std::pair<Individual, Individual> crossover(Individual & firstParent, Individual & secondParent);
 	bool verifyEndingCondition(const int & generationCount, const int & generationWithoutImprovementCount);
 	std::vector<int> getGreedySolution(matrixGraph* graph);
 };

@@ -120,6 +120,38 @@ TEST(GeneticAlgorithmTests, partialMappedCrossoverShouldCrossProperly)
 	ASSERT_EQ(children.second.genotype, properSecondVector);
 }
 
+TEST(GeneticAlgorithmTests, partialMappedCrossShouldGenerateAcceptableSolutions)
+{
+	GeneticAlgorithm ga;
+	auto graph = matrixGraph::generate(70, true);
+	ga.setGraph(&graph);
+
+	for (int i = 0; i < 100; i++)
+	{
+		Individual firstParent, secondParent; 
+		firstParent.setGenotype(ga.getRandomSolution(70), &graph);
+		secondParent.setGenotype(ga.getRandomSolution(70), &graph);
+
+		int a = rand() % 70, b = rand() % 70;
+
+		if (a > b)
+			std::swap(a, b);
+
+		auto kids = ga.partialMappedCrossover(firstParent, secondParent, a,b);
+
+		for (int j = 0; j < 70; j++)
+		{
+			for (int index = 0; index < 70; index++)
+			{
+				if(kids.first.genotype[index] == kids.first.genotype[j] && index != j)
+					GTEST_FAIL() << "Non unique solution generated";
+				if (kids.second.genotype[index] == kids.second.genotype[j] && index != j)
+					GTEST_FAIL() << "Non unique solution generated";
+			}
+		}
+	}
+}
+
 TEST(GeneticAlgorithmTests, orderCrossoverShouldCrossProperly)
 {
 	ASSERT_FALSE(true);
