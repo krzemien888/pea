@@ -6,7 +6,7 @@ struct Individual
 	std::vector<int> genotype;
 	int cost;
 	bool operator>(const Individual& other) const;
-
+	bool operator<(const Individual& other) const;
 	void setGenotype(std::vector<int> newGenotype, matrixGraph * graph);
 };
 
@@ -16,9 +16,9 @@ enum class CrossoverType {
 
 struct Population
 {
-	std::priority_queue<Individual, std::vector<Individual>, std::greater<Individual>> m_populationQueue;
+	std::list<Individual> populationList;
 	Individual getFittest() const;
-	void add(Individual toAdd) { m_populationQueue.push(toAdd); };
+	void add(Individual toAdd) { populationList.push_back(toAdd); };
 };
 
 class GeneticAlgorithm :
@@ -65,6 +65,7 @@ public:
 	std::pair<Individual, Individual> cycleCrossover(Individual & firstParent, Individual & secondParent);
 
 	// Mutate operators
+	void invert(Individual & individual, int a, int b);
 
 	// Initialize methods
 	void initPopulation(matrixGraph* graph);

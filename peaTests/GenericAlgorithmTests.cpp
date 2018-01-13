@@ -58,13 +58,13 @@ TEST(GenericAlgorithmTests, TrimPopulationShouldBringDownPopulationToPopulationL
 		std::next_permutation(v.begin(), v.end());
 		Individual newIndividual;
 		newIndividual.setGenotype(v, &graph);
-		population.m_populationQueue.push(newIndividual);
+		population.populationList.push_back(newIndividual);
 	}
 
 
 	population = ga.trimPopulation(population);
 
-	ASSERT_EQ(population.m_populationQueue.size(), 100);
+	ASSERT_EQ(population.populationList.size(), 100);
 }
 
 TEST(GeneticAlgorithmTests, getSortedPopulationShouldReturnSortedPopulation)
@@ -122,31 +122,32 @@ TEST(GeneticAlgorithmTests, partialMappedCrossoverShouldCrossProperly)
 
 TEST(GeneticAlgorithmTests, partialMappedCrossShouldGenerateAcceptableSolutions)
 {
+	srand((unsigned int)time(NULL));
 	GeneticAlgorithm ga;
-	auto graph = matrixGraph::generate(70, true);
+	auto graph = matrixGraph::generate(10, true);
 	ga.setGraph(&graph);
 
 	for (int i = 0; i < 100; i++)
 	{
 		Individual firstParent, secondParent; 
-		firstParent.setGenotype(ga.getRandomSolution(70), &graph);
-		secondParent.setGenotype(ga.getRandomSolution(70), &graph);
+		firstParent.setGenotype(ga.getRandomSolution(10), &graph);
+		secondParent.setGenotype(ga.getRandomSolution(10), &graph);
 
-		int a = rand() % 70, b = rand() % 70;
+		int a = rand() % 10, b = rand() % 10;
 
 		if (a > b)
 			std::swap(a, b);
 
 		auto kids = ga.partialMappedCrossover(firstParent, secondParent, a,b);
 
-		for (int j = 0; j < 70; j++)
+		for (int j = 0; j < 10; j++)
 		{
-			for (int index = 0; index < 70; index++)
+			for (int index = 0; index < 10; index++)
 			{
 				if(kids.first.genotype[index] == kids.first.genotype[j] && index != j)
-					GTEST_FAIL() << "Non unique solution generated";
+					GTEST_FAIL() << "Non unique solution generated\nIteration:" << i << "\na:" << a << "\nb" << b ;
 				if (kids.second.genotype[index] == kids.second.genotype[j] && index != j)
-					GTEST_FAIL() << "Non unique solution generated";
+					GTEST_FAIL() << "Non unique solution generated\nIteration:" << i << "\na:" << a << "\nb" << b;
 			}
 		}
 	}
