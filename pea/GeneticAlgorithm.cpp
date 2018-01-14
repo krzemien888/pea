@@ -8,54 +8,75 @@ Result GeneticAlgorithm::apply(matrixGraph * graph)
 	setGraph(graph);
 
 	// Initial settings
-	setPopulationLimit(graph->getSize() * 3);
-	setGenerationLimit(pow(graph->getSize(), 3));
-	setGenerationsWithoutImprovementLimit(graph->getSize() * 10);
+	setPopulationLimit((int)graph->getSize());
+	setGenerationLimit((int)graph->getSize() * 3);
+	setGenerationsWithoutImprovementLimit((int)graph->getSize()/2);
+	this->m_tournamentSize = 5;// (int)(graph->getSize() / 7) + 1;
+	this->m_mutationRate = 10;
 
+	logData("Generating initial population");
+	initPopulation(m_graph);
+	size_t graphsize = m_graph->getSize();
 
-	cout << "Generating initial population\n";
-	initPopulation(graph);
-	cout << "Population generated\n";
+	std::stringstream ss;
+	ss << "Population generated with " << getPopulationUniqueRate() << " uniquness rate\n";
+	logData(ss.str());
+
 	int generationCount = 0;
 	int generationsWithoutImprovement = 0;
 	std::chrono::high_resolution_clock::time_point startTime;
 	std::chrono::high_resolution_clock::time_point endTime;
 
-
 	Individual bestIndividual = m_population.getFittest();
-	cout << "Current best solution: ";
+	logData("Current best solution: ");
 	
 	for (auto x : bestIndividual.genotype)
-		cout << x << " ";
-	cout << " : " << bestIndividual.cost << endl;
+		ss << x << " ";
+	ss << " : " << bestIndividual.cost << endl;
 
-	cout << "Starting main loop\n";
+	logData(ss.str());
+	logData("Starting main loop");
 
 	startTime = std::chrono::high_resolution_clock::now();
 	while (verifyEndingCondition(generationCount, generationsWithoutImprovement))
 	{
 		auto selected = selectParents();
+
 		auto newPopulation = crossoverPopulation(selected);
 		newPopulation = mutatePopulation(newPopulation);
-			
-		m_population = trimPopulation(newPopulation);
+
+		ss << "New population generated with " << getPopulationUniqueRate() << " uniquness rate\n";
+
+		logData(ss.str());
+
+		m_population = newPopulation;
 
 		if (bestIndividual > m_population.getFittest())
 		{
 			bestIndividual = m_population.getFittest();
-			cout << "New best solution: ";
+			ss << "New best solution: ";
 
 			for (auto x : bestIndividual.genotype)
-				cout << x << " ";
-			cout << " : " << bestIndividual.cost << endl;
-			 
-			cout << "Generation nr: " << generationCount << "\n";
+				ss << x << " ";
+			ss << " : " << bestIndividual.cost;
+			logData(ss.str());
+			ss << "Generation nr: " << generationCount << "\n";
+			ss << "Current population uniqness: " << getPopulationUniqueRate();
+
+			logData(ss.str());
+
 			generationsWithoutImprovement = 0;
 		}
 		else {
 			generationsWithoutImprovement++;
 
 		}
+
+		//if (getPopulationUniqueRate() < 0.05)
+		//{
+		//	logData("Uniqness of population is below 5%. Ending algorithm.");
+		//	break;
+		//}
 
 		generationCount++;
 	}
@@ -66,6 +87,8 @@ Result GeneticAlgorithm::apply(matrixGraph * graph)
 	output.result = bestIndividual.cost;
 	output.time = (int)std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 	output.fileName = graph->getName();
+
+	m_population.populationList.clear();
 
 	return output;
 }
@@ -87,12 +110,6 @@ std::string GeneticAlgorithm::toString()
 		output.append("CX");
 		break;
 	}
-	output.append("-");
-	output.append(std::to_string(getGenerationLimit()));
-	output.append("-");
-	output.append(std::to_string(getGenerationswithoutImprovementLimit()));
-	output.append("-");
-	output.append(std::to_string(getPopulationLimit()));
 	return output;
 }
 
@@ -155,6 +172,11 @@ CrossoverType GeneticAlgorithm::getCrossoverType() const
 	return m_crossoverType;
 }
 
+void GeneticAlgorithm::setLogging(bool logOn)
+{
+	m_logData = logOn;
+}
+
 Population GeneticAlgorithm::trimPopulation(Population & populationToTrim)
 {
 	Population output = populationToTrim;
@@ -165,7 +187,7 @@ Population GeneticAlgorithm::trimPopulation(Population & populationToTrim)
 	return output;
 }
 
-Population GeneticAlgorithm::crossoverPopulation(std::list<std::pair<Individual, Individual>>& selectedParents)
+Population GeneticAlgorithm::crossoverPopulation(std::vector<std::pair<Individual, Individual>>& selectedParents)
 {
 	Population output;
 	switch (getCrossoverType())
@@ -197,51 +219,92 @@ Population GeneticAlgorithm::mutatePopulation(Population & population)
 {
 	for (auto &currIndividual : population.populationList)
 	{
-		if (rand() % 101 < 10)
+		if (rand() % 101 < m_mutationRate)
 		{
 			int a = rand() % currIndividual.genotype.size();
 			int b = rand() % currIndividual.genotype.size();
+		
 			invert(currIndividual, a, b);
 		}
 	}
 	return population;
 }
 
-std::list<std::pair<Individual, Individual>> GeneticAlgorithm::selectParents()
+std::vector<std::pair<Individual, Individual>> GeneticAlgorithm::selectParents()
 {
-	std::list<std::pair<Individual, Individual>> output;
-
-	auto currPopulation = getSortedPopulation();
-
-	while (output.size() < m_populationLimit/2)
-	{
-		auto first = currPopulation.front();
-		currPopulation.pop_front();
-		auto second = currPopulation.front();
-		currPopulation.pop_front();
-		output.push_back(std::make_pair(first, second));
-	}
-	
+	auto output = tournamentSelection();
 	return output;
 }
 
-std::list<Individual> GeneticAlgorithm::getSortedPopulation()
+std::vector<Individual> GeneticAlgorithm::getSortedPopulation()
 {
+	throw std::invalid_argument("not yet implemented");
 	Population tmp = m_population;
 	
-	tmp.populationList.sort();
+	//tmp.populationList.sort();
 
 	return tmp.populationList;
 }
 
-std::list<Individual> GeneticAlgorithm::rouletteSelection()
+float GeneticAlgorithm::getPopulationUniqueRate()
 {
-	return std::list<Individual>();
+	auto population = m_population.populationList;
+
+	sort(population.begin(), population.end());
+	auto uniqueCount = std::unique(population.begin(), population.end()) - population.begin();
+
+	float uniquenessRate = ((float)uniqueCount) / (float)population.size();
+
+	return uniquenessRate;
 }
+
+std::vector<std::pair<Individual, Individual>> GeneticAlgorithm::tournamentSelection()
+{
+	std::vector<std::pair<Individual, Individual>> output;
+
+	while (output.size()*2 < getPopulationLimit())
+	{
+		std::vector<Individual> firstTorunament, secondTournament;
+
+		while (firstTorunament.size() < m_tournamentSize)
+			firstTorunament.push_back(m_population.populationList[rand() % m_population.populationList.size()]);
+		
+		while (secondTournament.size() < m_tournamentSize)
+			secondTournament.push_back(m_population.populationList[rand() % m_population.populationList.size()]);
+
+		Individual firstWinner, secondWinner;
+
+		firstWinner = firstTorunament[0];
+		secondWinner = secondTournament[0];
+		for (int i = 0; i < firstTorunament.size(); i++)
+		{
+			if (firstWinner.cost > firstTorunament[i].cost)
+				firstWinner = firstTorunament[i];
+
+			if (secondWinner.cost > secondTournament[i].cost)
+				secondWinner = secondTournament[i];
+		}
+
+		output.push_back(std::make_pair(firstWinner, secondWinner));
+	}
+
+	return output;
+}
+
 
 bool GeneticAlgorithm::verifyEndingCondition(const int & generationCount, const int & generationWithoutImprovementCount)
 {
 	return generationCount < m_generationLimit && generationWithoutImprovementCount < m_generationsWithoutImprovementLimit;
+}
+
+void GeneticAlgorithm::logData(std::string message, std::string function)
+{
+	if (m_logData)
+	{
+		if (!function.empty())
+			std::cout << function << ": ";
+		std::cout << message << std::endl;
+	}
 }
 
 std::vector<int> GeneticAlgorithm::getGreedySolution(matrixGraph * graph)
@@ -292,11 +355,8 @@ void Individual::setGenotype(std::vector<int> newGenotype, matrixGraph * graph)
 std::pair<Individual, Individual> GeneticAlgorithm::partialMappedCrossover(Individual & firstParent, Individual & secondParent, const int a, const int b)
 {
 	std::vector<int> vFirst(firstParent.genotype.size()), vSecond(secondParent.genotype.size());
-	std::vector<int> firstPermutation(firstParent.genotype.size());
-	std::vector<int> secondPermutation(firstParent.genotype.size());
-
-	std::fill(firstPermutation.begin(), firstPermutation.end(), -1);
-	std::fill(secondPermutation.begin(), secondPermutation.end(), -1);
+	std::vector<int> firstPermutation(firstParent.genotype.size(), -1);
+	std::vector<int> secondPermutation(firstParent.genotype.size(), -1);
 
 	// Partial copy
 	for (int i = a; i <= b; i++)
@@ -304,8 +364,16 @@ std::pair<Individual, Individual> GeneticAlgorithm::partialMappedCrossover(Indiv
 		vFirst[i] = secondParent.genotype[i];
 		vSecond[i] = firstParent.genotype[i];
 
-		firstPermutation[secondParent.genotype[i]] = firstParent.genotype[i];
-		secondPermutation[firstParent.genotype[i]] = secondParent.genotype[i];
+		if (secondParent.genotype[i] != firstParent.genotype[i])
+		{
+			firstPermutation[secondParent.genotype[i]] = firstParent.genotype[i];
+			secondPermutation[firstParent.genotype[i]] = secondParent.genotype[i];
+		}
+		else
+		{
+			firstPermutation[secondParent.genotype[i]] = -1;
+			secondPermutation[firstParent.genotype[i]] = -1;
+		}
 	}
 
 	for (int i = 0; i < firstParent.genotype.size(); i++)
@@ -340,6 +408,7 @@ std::pair<Individual, Individual> GeneticAlgorithm::partialMappedCrossover(Indiv
 	firstChild.setGenotype(vFirst, m_graph);
 	secondChild.setGenotype(vSecond, m_graph);
 
+	
 	return std::make_pair(firstChild, secondChild);
 }
 
@@ -360,8 +429,10 @@ void GeneticAlgorithm::invert(Individual & individual, int a, int b)
 
 	auto path = individual.genotype;
 
-	for (int i = 0; i + a <= b; i++)
-		path[i + a] = path[b - i];
+	for (int i = 0; i < b - a; i++)
+	{
+		std::swap(path[i + a], path[b - i]);
+	}
 
 	individual.setGenotype(path, m_graph);
 }
@@ -369,15 +440,28 @@ void GeneticAlgorithm::invert(Individual & individual, int a, int b)
 void GeneticAlgorithm::initPopulation(matrixGraph* graph)
 {
 	Individual greedy;
+
 	greedy.setGenotype(getGreedySolution(graph), graph);
+	m_population.populationList.push_back(greedy);
 
 	while(m_population.populationList.size() < getPopulationLimit())
 	{
 		Individual newIndividual;
 
 		newIndividual.setGenotype(getRandomSolution(graph->getSize()), graph);
-		m_population.populationList.push_back(newIndividual);
+
+		int a = rand() % m_graph->getSize();
+		int b = rand() % m_graph->getSize();
+
+		if (a > b)
+			std::swap(a, b);
+
+		auto children = partialMappedCrossover(greedy, newIndividual,a,b);
+
+		m_population.populationList.push_back(children.first);
+		m_population.populationList.push_back(children.second);
 	}
+
 }
 
 Individual Population::getFittest() const
@@ -394,4 +478,9 @@ Individual Population::getFittest() const
 bool Individual::operator<(const Individual& other) const
 {
 	return cost < other.cost;
+}
+
+bool Individual::operator==(const Individual & other) const
+{
+	return cost == other.cost && genotype == other.genotype;
 }

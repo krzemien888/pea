@@ -8,7 +8,7 @@ GeneticController::GeneticController(Application * app) : Controller(app, new Ge
 
 std::string GeneticController::getAlgorithmName()
 {
-	std::string output("TabuSearch-");
+	std::string output("GeneticAlgorithm-");
 	output.append(m_algh->toString());
 	return output;
 }
@@ -25,10 +25,15 @@ void GeneticController::registerOptions()
 
 void GeneticController::applyFromSettings()
 {
-	/*std::string filename = getFilenameFromUser();
+	std::string filename = getFilenameFromUser();
 	auto settings = readSettings(filename);
 	auto graphVector = getGraphFromSettings(settings);
 	system("cls");
+
+	GeneticAlgorithm* ga = (GeneticAlgorithm*)m_algh;
+	ga->setLogging(false);
+
+
 
 	std::vector<Result> results;
 	Result tmpResult;
@@ -98,7 +103,7 @@ void GeneticController::applyFromSettings()
 			throw std::logic_error("Couldn't save solution for " + filename + "-solutions-" + getAlgorithmName() + ".csv");
 
 		stream.close();
-		results.clear();*/
-	//}
+		results.clear();
+	}
 
 }

@@ -7,6 +7,7 @@ struct Individual
 	int cost;
 	bool operator>(const Individual& other) const;
 	bool operator<(const Individual& other) const;
+	bool operator==(const Individual& other) const;
 	void setGenotype(std::vector<int> newGenotype, matrixGraph * graph);
 };
 
@@ -16,7 +17,7 @@ enum class CrossoverType {
 
 struct Population
 {
-	std::list<Individual> populationList;
+	std::vector<Individual> populationList;
 	Individual getFittest() const;
 	void add(Individual toAdd) { populationList.push_back(toAdd); };
 };
@@ -49,15 +50,18 @@ public:
 	void setCrossoverType(const CrossoverType & selectedType);
 	CrossoverType getCrossoverType() const;
 
+	void setLogging(bool logOn);
+
 	// Population operations
 	Population trimPopulation(Population & populationToTrim);
-	Population crossoverPopulation(std::list<std::pair<Individual, Individual>> & selectedParents);
+	Population crossoverPopulation(std::vector<std::pair<Individual, Individual>> & selectedParents);
 	Population mutatePopulation(Population & population);
-	std::list<std::pair<Individual, Individual>> selectParents();
-	std::list<Individual> getSortedPopulation();
+	std::vector<std::pair<Individual, Individual>> selectParents();
+	std::vector<Individual> getSortedPopulation();
+	float getPopulationUniqueRate();
 
 	// Selection operators
-	std::list<Individual> rouletteSelection();
+	std::vector<std::pair<Individual, Individual>> tournamentSelection();
 
 	// Crossover operators
 	std::pair<Individual, Individual> partialMappedCrossover(Individual & firstParent, Individual & secondParent, const int a, const int b);
@@ -69,14 +73,19 @@ public:
 
 	// Initialize methods
 	void initPopulation(matrixGraph* graph);
+	std::vector<int> getGreedySolution(matrixGraph* graph);
 private:
 
 	// Properties
+
+	bool m_logData = true;
 
 	// Algorithm settings
 	int m_populationLimit;
 	int m_generationLimit;
 	int m_generationsWithoutImprovementLimit;
+	int m_tournamentSize;
+	int m_mutationRate;
 	CrossoverType m_crossoverType = CrossoverType::PMX;
 
 	// Inner data properies
@@ -85,6 +94,8 @@ private:
 
 	// Initialize methods
 	bool verifyEndingCondition(const int & generationCount, const int & generationWithoutImprovementCount);
-	std::vector<int> getGreedySolution(matrixGraph* graph);
+
+	// Utility methods
+	void logData(std::string message, std::string function = std::string(""));
 };
 

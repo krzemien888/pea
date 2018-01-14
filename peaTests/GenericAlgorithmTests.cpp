@@ -82,15 +82,8 @@ TEST(GeneticAlgorithmTests, getSortedPopulationShouldReturnSortedPopulation)
 
 	ASSERT_FALSE(population.empty());
 
-	while (!population.empty())
-	{
-		auto first = population.front();
-		population.pop_front();
-		if (population.empty())
-			break;
-		auto second = population.front();
-		ASSERT_FALSE(second.cost < first.cost);
-	}
+	for (int i = 0; i < population.size() - 1; i++)
+		ASSERT_FALSE(population[i].cost > population[i + 1].cost);
 }
 
 TEST(GenticAlgorithmTests, rouletteSelectionShouldReturnProperlySelectedParents)
@@ -101,21 +94,21 @@ TEST(GenticAlgorithmTests, rouletteSelectionShouldReturnProperlySelectedParents)
 TEST(GeneticAlgorithmTests, partialMappedCrossoverShouldCrossProperly)
 {
 	GeneticAlgorithm ga;
-	auto graph = matrixGraph::generate(20, true);
+	auto graph = matrixGraph::generate(9, true);
 	ga.setGraph(&graph);
 	Individual first;
 	Individual second;
 
-	std::vector<int> firstParent = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-	std::vector<int> secondParent = { 4, 5, 2, 1, 8, 7, 6, 9, 3 };
+	std::vector<int> firstParent = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+	std::vector<int> secondParent = { 3, 4, 1, 0, 7, 6, 5, 8, 2 };
 	
 	first.setGenotype(firstParent, &graph);
 	second.setGenotype(secondParent, &graph);
 
 	auto children = ga.partialMappedCrossover(first, second, 3, 6);
 
-	std::vector<int> properFirstVector = { 4,2,3,1,8,7,6,5,9 };
-	std::vector<int> properSecondVector = { 1, 8, 2, 4, 5, 6, 7, 9, 3 };
+	std::vector<int> properFirstVector = { 3,1,2,0,7,6,5,4,8 };
+	std::vector<int> properSecondVector = { 0, 7, 1, 3, 4, 5, 6, 8, 2 };
 	ASSERT_EQ(children.first.genotype, properFirstVector);
 	ASSERT_EQ(children.second.genotype, properSecondVector);
 }
@@ -150,6 +143,39 @@ TEST(GeneticAlgorithmTests, partialMappedCrossShouldGenerateAcceptableSolutions)
 					GTEST_FAIL() << "Non unique solution generated\nIteration:" << i << "\na:" << a << "\nb" << b;
 			}
 		}
+	}
+}
+
+TEST(GeneticAlgorithmTests, generateRandomSolutionShouldGenerateAcceptableSolutions)
+{
+	GeneticAlgorithm ga;
+
+	for (int i = 0; i < 100; i++)
+	{
+		auto v = ga.getRandomSolution(100);
+
+		sort(v.begin(), v.end());
+
+		for (int x = 0; x < v.size() - 1; x++)
+			if (v[x] == v[x + 1])
+				GTEST_FAIL() << "Non unique solution generated";
+	}
+}
+
+TEST(GeneticAlgorithmTests, generateGreedySolutionShouldGenerateAcceptableSolutions)
+{
+	GeneticAlgorithm ga;
+
+	for (int i = 0; i < 100; i++)
+	{
+		auto graph = matrixGraph::generate(100, false);
+		auto v = ga.getGreedySolution(&graph);
+
+		sort(v.begin(), v.end());
+
+		for (int x = 0; x < v.size() - 1; x++)
+			if (v[x] == v[x + 1])
+				GTEST_FAIL() << "Non unique solution generated";
 	}
 }
 

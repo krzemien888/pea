@@ -22,7 +22,7 @@ void Controller::applyOnFile()
 	auto result = m_algh->apply(&graph);
 	result.fileName = graph.getName();
 
-	system("cls");
+
 	std::cout << result;
 	system("pause");
 }
