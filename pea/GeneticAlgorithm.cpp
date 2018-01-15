@@ -95,15 +95,26 @@ std::string GeneticAlgorithm::toString()
 	switch (getCrossoverType())
 	{
 	case CrossoverType::PMX:
-		output.append("PMX");
+		output.append("PMX-");
 		break;
 	case CrossoverType::OX:
-		output.append("OX");
+		output.append("OX-");
 		break;
 	case CrossoverType::CX:
-		output.append("CX");
+		output.append("CX-");
 		break;
 	}
+
+	switch (getMutateType())
+	{
+	case MutateType::Invert:
+		output.append("invert");
+		break;
+	case MutateType::Swap:
+		output.append("swap");
+		break;
+	}
+
 	return output;
 }
 
@@ -135,6 +146,11 @@ void GeneticAlgorithm::setGenerationsWithoutImprovementLimit(const int newLimit)
 int GeneticAlgorithm::getGenerationswithoutImprovementLimit() const
 {
 	return m_generationsWithoutImprovementLimit;
+}
+
+MutateType GeneticAlgorithm::getMutateType()
+{
+	return m_mutateType;
 }
 
 void GeneticAlgorithm::setGraph(matrixGraph * graph)
@@ -187,9 +203,6 @@ Population GeneticAlgorithm::crossoverPopulation(std::vector<std::pair<Individua
 	switch (getCrossoverType())
 	{
 	case CrossoverType::OX:
-
-		break;
-	case CrossoverType::CX:
 		for (auto parent : selectedParents)
 		{
 			int a = rand() % m_graph->getSize();
@@ -202,6 +215,9 @@ Population GeneticAlgorithm::crossoverPopulation(std::vector<std::pair<Individua
 			output.add(children.first);
 			output.add(children.second);
 		}
+		break;
+	case CrossoverType::CX:
+	
 		break;
 	case CrossoverType::PMX:
 		for (auto parent : selectedParents)
@@ -229,8 +245,8 @@ Population GeneticAlgorithm::mutatePopulation(Population & population)
 		{
 			int a = rand() % currIndividual.genotype.size();
 			int b = rand() % currIndividual.genotype.size();
-		
-			invert(currIndividual, a, b);
+
+			mutate(currIndividual, a, b);
 		}
 	}
 	return population;
@@ -310,6 +326,19 @@ void GeneticAlgorithm::logData(std::string message, std::string function)
 		if (!function.empty())
 			std::cout << function << ": ";
 		std::cout << message << std::endl;
+	}
+}
+
+void GeneticAlgorithm::mutate(Individual & individual, int a, int b)
+{
+	switch (getMutateType())
+	{
+	case MutateType::Invert:
+		invert(individual, a, b);
+		break;
+	case MutateType::Swap:
+		std::swap(individual.genotype[a], individual.genotype[b]);
+		break;
 	}
 }
 
