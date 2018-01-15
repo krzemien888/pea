@@ -72,12 +72,6 @@ Result GeneticAlgorithm::apply(matrixGraph * graph)
 
 		}
 
-		//if (getPopulationUniqueRate() < 0.05)
-		//{
-		//	logData("Uniqness of population is below 5%. Ending algorithm.");
-		//	break;
-		//}
-
 		generationCount++;
 	}
 	endTime = std::chrono::high_resolution_clock::now();
@@ -101,15 +95,26 @@ std::string GeneticAlgorithm::toString()
 	switch (getCrossoverType())
 	{
 	case CrossoverType::PMX:
-		output.append("PMX");
+		output.append("PMX-");
 		break;
 	case CrossoverType::OX:
-		output.append("OX");
+		output.append("OX-");
 		break;
 	case CrossoverType::CX:
-		output.append("CX");
+		output.append("CX-");
 		break;
 	}
+
+	switch (getMutateType())
+	{
+	case MutateType::Invert:
+		output.append("invert");
+		break;
+	case MutateType::Swap:
+		output.append("swap");
+		break;
+	}
+
 	return output;
 }
 
@@ -141,6 +146,11 @@ void GeneticAlgorithm::setGenerationsWithoutImprovementLimit(const int newLimit)
 int GeneticAlgorithm::getGenerationswithoutImprovementLimit() const
 {
 	return m_generationsWithoutImprovementLimit;
+}
+
+MutateType GeneticAlgorithm::getMutateType()
+{
+	return m_mutateType;
 }
 
 void GeneticAlgorithm::setGraph(matrixGraph * graph)
@@ -193,9 +203,21 @@ Population GeneticAlgorithm::crossoverPopulation(std::vector<std::pair<Individua
 	switch (getCrossoverType())
 	{
 	case CrossoverType::OX:
+		for (auto parent : selectedParents)
+		{
+			int a = rand() % m_graph->getSize();
+			int b = rand() % m_graph->getSize();
 
+			if (a > b)
+				std::swap(a, b);
+
+			auto children = orderCrossover(parent.first, parent.second, a, b);
+			output.add(children.first);
+			output.add(children.second);
+		}
 		break;
 	case CrossoverType::CX:
+	
 		break;
 	case CrossoverType::PMX:
 		for (auto parent : selectedParents)
@@ -223,8 +245,8 @@ Population GeneticAlgorithm::mutatePopulation(Population & population)
 		{
 			int a = rand() % currIndividual.genotype.size();
 			int b = rand() % currIndividual.genotype.size();
-		
-			invert(currIndividual, a, b);
+
+			mutate(currIndividual, a, b);
 		}
 	}
 	return population;
@@ -304,6 +326,19 @@ void GeneticAlgorithm::logData(std::string message, std::string function)
 		if (!function.empty())
 			std::cout << function << ": ";
 		std::cout << message << std::endl;
+	}
+}
+
+void GeneticAlgorithm::mutate(Individual & individual, int a, int b)
+{
+	switch (getMutateType())
+	{
+	case MutateType::Invert:
+		invert(individual, a, b);
+		break;
+	case MutateType::Swap:
+		std::swap(individual.genotype[a], individual.genotype[b]);
+		break;
 	}
 }
 
@@ -414,7 +449,70 @@ std::pair<Individual, Individual> GeneticAlgorithm::partialMappedCrossover(Indiv
 
 std::pair<Individual, Individual> GeneticAlgorithm::orderCrossover(Individual & firstParent, Individual & secondParent, const int a, const int b)
 {
-	return std::pair<Individual, Individual>();
+	std::vector<bool> firstRemplacement(m_graph->getSize(), false);
+	std::vector<bool> secondRemplacement(m_graph->getSize(), false);
+	std::vector<int> firstChildVector(m_graph->getSize(), -1);
+	std::vector<int> secondChildVector(m_graph->getSize(), -1);
+
+	auto firstParentVector = firstParent.genotype;
+	auto secondParentVector = secondParent.genotype;
+
+	// In cut range
+	for (int i = a; i <= b; i++)
+	{
+		firstChildVector[i] = firstParentVector[i];
+		secondChildVector[i] = secondParentVector[i];
+
+		firstRemplacement[firstParentVector[i]] = true;
+		secondRemplacement[secondParentVector[i]] = true;
+	}
+
+	// Make copied part be last in vector
+	int howFarToRotate = firstChildVector.size() - 1 - b;
+	std::rotate(firstParentVector.rbegin(), firstParentVector.rbegin() + howFarToRotate, firstParentVector.rend());
+	std::rotate(secondParentVector.rbegin(), secondParentVector.rbegin() + howFarToRotate, secondParentVector.rend());
+
+	// Calculate copied area start index
+	int copiedPartBeginIndex = a + howFarToRotate;
+
+	int firstCopyLastIndex = 0;
+	int secondCopyLastIndex = 0;
+
+	// Copy part outside of range
+ 	for (int i = b + 1; i != a; i++)
+	{
+		if (i == m_graph->getSize())
+		{
+			if (a == 0)
+				break;
+			else
+				i = 0;
+		}
+
+		for(int j = firstCopyLastIndex; j < secondParentVector.size(); j++)
+			if (!firstRemplacement[secondParentVector[j]])
+			{
+				firstChildVector[i] = secondParentVector[j];
+				firstRemplacement[secondParentVector[j]] = true;
+				firstCopyLastIndex = j + 1;
+				break;
+			}
+
+		for (int j = secondCopyLastIndex; j < firstParentVector.size(); j++)
+			if (!secondRemplacement[firstParentVector[j]])
+			{
+				secondChildVector[i] = firstParentVector[j];
+				secondRemplacement[firstParentVector[j]] = true;
+				secondCopyLastIndex = j + 1;
+				break;
+			}
+	}
+
+	Individual firstChild, secondChild;
+	firstChild.setGenotype(firstChildVector, m_graph);
+	secondChild.setGenotype(secondChildVector, m_graph);
+
+	return std::make_pair(firstChild, secondChild);
 }
 
 std::pair<Individual, Individual> GeneticAlgorithm::cycleCrossover(Individual & firstParent, Individual & secondParent)

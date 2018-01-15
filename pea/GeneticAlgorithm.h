@@ -15,6 +15,10 @@ enum class CrossoverType {
 	PMX, OX, CX
 };
 
+enum class MutateType {
+	Invert, Swap
+};
+
 struct Population
 {
 	std::vector<Individual> populationList;
@@ -42,6 +46,8 @@ public:
 
 	void setGenerationsWithoutImprovementLimit(const int newLimit);
 	int getGenerationswithoutImprovementLimit() const;
+
+	MutateType getMutateType();
 
 	void setGraph(matrixGraph* graph);
 
@@ -78,7 +84,7 @@ private:
 
 	// Properties
 
-	bool m_logData = true;
+	bool m_logData = false;
 
 	// Algorithm settings
 	int m_populationLimit;
@@ -86,7 +92,8 @@ private:
 	int m_generationsWithoutImprovementLimit;
 	int m_tournamentSize;
 	int m_mutationRate;
-	CrossoverType m_crossoverType = CrossoverType::PMX;
+	CrossoverType m_crossoverType = CrossoverType::OX;
+	MutateType m_mutateType = MutateType::Invert;
 
 	// Inner data properies
 	Population m_population;
@@ -97,5 +104,6 @@ private:
 
 	// Utility methods
 	void logData(std::string message, std::string function = std::string(""));
+	void mutate(Individual & individual,int a,int b);
 };
 

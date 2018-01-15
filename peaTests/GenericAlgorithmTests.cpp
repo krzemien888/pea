@@ -10,38 +10,21 @@ TEST(GeneticAlgorithmTests, toStringShouldProperyGenerateIdentificationString)
 	ga.setGenerationsWithoutImprovementLimit(200);
 	ga.setPopulationLimit(500);
 
-	ASSERT_EQ("-PMX-1000-200-500", ga.toString());
+	ASSERT_EQ("-PMX", ga.toString());
 
 	ga.setCrossoverType(CrossoverType::OX);
 	ga.setGenerationLimit(2000);
 	ga.setGenerationsWithoutImprovementLimit(300);
 	ga.setPopulationLimit(600);
 
-	ASSERT_EQ("-OX-2000-300-600", ga.toString());
+	ASSERT_EQ("-OX", ga.toString());
 
 	ga.setCrossoverType(CrossoverType::CX);
 	ga.setGenerationLimit(1000);
 	ga.setGenerationsWithoutImprovementLimit(200);
 	ga.setPopulationLimit(500);
 
-	ASSERT_EQ("-CX-1000-200-500", ga.toString());
-}
-
-TEST(GeneticAlgorithmTests, initPopulationShouldGenerateSeedPopulation)
-{
-	GeneticAlgorithm ga;
-	ga.setCrossoverType(CrossoverType::CX);
-	ga.setGenerationLimit(1000);
-	ga.setGenerationsWithoutImprovementLimit(200);
-	ga.setPopulationLimit(100);
-
-	auto graph = matrixGraph::generate(20, false);
-
-	ga.initPopulation(&graph);
-	auto population = ga.getSortedPopulation();
-
-	ASSERT_FALSE(population.empty());
-	ASSERT_EQ(population.size(), 100);
+	ASSERT_EQ("-CX", ga.toString());
 }
 
 TEST(GenericAlgorithmTests, TrimPopulationShouldBringDownPopulationToPopulationLimit)
@@ -65,30 +48,6 @@ TEST(GenericAlgorithmTests, TrimPopulationShouldBringDownPopulationToPopulationL
 	population = ga.trimPopulation(population);
 
 	ASSERT_EQ(population.populationList.size(), 100);
-}
-
-TEST(GeneticAlgorithmTests, getSortedPopulationShouldReturnSortedPopulation)
-{
-	GeneticAlgorithm ga;
-	auto graph = matrixGraph::generate(20, false);
-
-	ga.setCrossoverType(CrossoverType::CX);
-	ga.setGenerationLimit(1000);
-	ga.setGenerationsWithoutImprovementLimit(200);
-	ga.setPopulationLimit(50);
-
-	ga.initPopulation(&graph);
-	auto population = ga.getSortedPopulation();
-
-	ASSERT_FALSE(population.empty());
-
-	for (int i = 0; i < population.size() - 1; i++)
-		ASSERT_FALSE(population[i].cost > population[i + 1].cost);
-}
-
-TEST(GenticAlgorithmTests, rouletteSelectionShouldReturnProperlySelectedParents)
-{
-	ASSERT_FALSE(true);
 }
 
 TEST(GeneticAlgorithmTests, partialMappedCrossoverShouldCrossProperly)
@@ -162,6 +121,8 @@ TEST(GeneticAlgorithmTests, generateRandomSolutionShouldGenerateAcceptableSoluti
 	}
 }
 
+
+
 TEST(GeneticAlgorithmTests, generateGreedySolutionShouldGenerateAcceptableSolutions)
 {
 	GeneticAlgorithm ga;
@@ -179,11 +140,83 @@ TEST(GeneticAlgorithmTests, generateGreedySolutionShouldGenerateAcceptableSoluti
 	}
 }
 
-TEST(GeneticAlgorithmTests, orderCrossoverShouldCrossProperly)
+TEST(GeneticAlgorithmTests, orderCrossShouldGenerateAcceptableSolutions)
 {
-	ASSERT_FALSE(true);
+	srand((unsigned int)time(NULL));
+	GeneticAlgorithm ga;
+	auto graph = matrixGraph::generate(10, true);
+	ga.setGraph(&graph);
+
+	for (int i = 0; i < 100; i++)
+	{
+		Individual firstParent, secondParent;
+		firstParent.setGenotype(ga.getRandomSolution(10), &graph);
+		secondParent.setGenotype(ga.getRandomSolution(10), &graph);
+
+		int a = rand() % 10, b = rand() % 10;
+
+		if (a > b)
+			std::swap(a, b);
+		std::cerr << "test\n";
+		auto kids = ga.orderCrossover(firstParent, secondParent, a, b);
+
+
+		sort(kids.first.genotype.begin(), kids.first.genotype.end());
+		auto uniqueCountfirst = std::unique(kids.first.genotype.begin(), kids.first.genotype.end()) - kids.first.genotype.begin();
+
+		sort(kids.second.genotype.begin(), kids.second.genotype.end());
+		auto uniqueCount = std::unique(kids.second.genotype.begin(), kids.second.genotype.end()) - kids.second.genotype.begin();
+
+		ASSERT_EQ(uniqueCountfirst, 10);
+		ASSERT_EQ(uniqueCount, 10);
+	}
 }
 
+TEST(GeneticAlgorithmTests, orderCrossoverShouldCrossProperly)
+{
+	auto graph = matrixGraph::generate(9, false);
+	GeneticAlgorithm ga;
+	ga.setGraph(&graph);
+
+	std::vector<int> firstParentV = {0,1,2,3,4,5,6,7,8};
+	std::vector<int> secondParentV = {3,4,1,0,7,6,5,8,2};
+
+	Individual firstParent, secondParent;
+	firstParent.setGenotype(firstParentV, &graph);
+	secondParent.setGenotype(secondParentV, &graph);
+
+	auto children = ga.orderCrossover(firstParent, secondParent, 3, 6);
+
+	std::vector<int> firstChildV = {1,0,7,3,4,5,6,8,2};
+	std::vector<int> secondChildV = { 2,3,4,0,7,6,5,8,1 };
+
+	ASSERT_EQ(children.first.genotype, firstChildV);
+	ASSERT_EQ(children.second.genotype, secondChildV);
+
+}
+
+TEST(GeneticAlgorithmTests, orderCrossoverShouldCrossProperly2)
+{
+	auto graph = matrixGraph::generate(10, false);
+	GeneticAlgorithm ga;
+	ga.setGraph(&graph);
+
+	std::vector<int> firstParentV = {6,1,5,9,3,0,8,4,7,2 };
+	std::vector<int> secondParentV = { 9,8,2,6,4,5,0,1,7,3 };
+
+	Individual firstParent, secondParent;
+	firstParent.setGenotype(firstParentV, &graph);
+	secondParent.setGenotype(secondParentV, &graph);
+
+	auto children = ga.orderCrossover(firstParent, secondParent, 4, 7);//3 6
+
+	std::vector<int> firstChildV = { 2,6,5,1,3,0,8,4,7,9 };
+	std::vector<int> secondChildV = { 6,9,3,8,4,5,0,1,7,2};
+
+	ASSERT_EQ(children.first.genotype, firstChildV);
+	ASSERT_EQ(children.second.genotype, secondChildV);
+
+}
 TEST(GeneticAlgorithmTests, cycleCrossoverShouldCrossProperly)
 {
 	ASSERT_FALSE(true);
