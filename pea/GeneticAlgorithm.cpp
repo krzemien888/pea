@@ -425,70 +425,63 @@ std::pair<Individual, Individual> GeneticAlgorithm::orderCrossover(Individual & 
 	std::vector<int> firstChildVector(m_graph->getSize(), -1);
 	std::vector<int> secondChildVector(m_graph->getSize(), -1);
 
+	auto firstParentVector = firstParent.genotype;
+	auto secondParentVector = secondParent.genotype;
+
 	// In cut range
 	for (int i = a; i <= b; i++)
 	{
-		firstChildVector[i] = firstParent.genotype[i];
-		secondChildVector[i] = secondParent.genotype[i];
+		firstChildVector[i] = firstParentVector[i];
+		secondChildVector[i] = secondParentVector[i];
 
-		firstRemplacement[firstParent.genotype[i]] = true;
-		secondRemplacement[secondParent.genotype[i]] = true;
+		firstRemplacement[firstParentVector[i]] = true;
+		secondRemplacement[secondParentVector[i]] = true;
 	}
 
-	int firstCopyLastIndex = b + 1, secondCopyLastIndex = b + 1;
-	bool firstChildGuard = true, secondChildGuard = true;
-	// Out of cut range
-	for (int i = b + 1; i != a; i++)
+	// Make copied part be last in vector
+	int howFarToRotate = firstChildVector.size() - 1 - b;
+	std::rotate(firstParentVector.rbegin(), firstParentVector.rbegin() + howFarToRotate, firstParentVector.rend());
+	std::rotate(secondParentVector.rbegin(), secondParentVector.rbegin() + howFarToRotate, secondParentVector.rend());
+
+	// Calculate copied area start index
+	int copiedPartBeginIndex = a + howFarToRotate;
+
+	int firstCopyLastIndex = 0;
+	int secondCopyLastIndex = 0;
+
+	// Copy part outside of range
+ 	for (int i = b + 1; i != a; i++)
 	{
 		if (i == m_graph->getSize())
-			i = 0;
-		for (int j = firstCopyLastIndex;j != b+1 || firstChildGuard; j++)
 		{
-			if (j == m_graph->getSize())
-				j = 0;
-			if (!firstRemplacement[secondParent.genotype[j]])
-			{
-				firstChildVector[i] = secondParent.genotype[j];
-				firstRemplacement[secondParent.genotype[j]] = true;
-				firstCopyLastIndex = j + 1;
-				firstChildGuard = false;
+			if (a == 0)
 				break;
-			}
+			else
+				i = 0;
 		}
 
-		for (int j = secondCopyLastIndex; j != b + 1 || secondChildGuard; j++)
-		{
-			if (j == m_graph->getSize())
-				j = 0;
-			if (!secondRemplacement[firstParent.genotype[j]])
+		for(int j = firstCopyLastIndex; j < secondParentVector.size(); j++)
+			if (!firstRemplacement[secondParentVector[j]])
 			{
-				secondChildVector[i] = firstParent.genotype[j];
-				secondRemplacement[firstParent.genotype[j]] = true;
-				secondCopyLastIndex = j + 1;
-				secondChildGuard = false;
+				firstChildVector[i] = secondParentVector[j];
+				firstRemplacement[secondParentVector[j]] = true;
+				firstCopyLastIndex = j + 1;
 				break;
 			}
-		}
+
+		for (int j = secondCopyLastIndex; j < firstParentVector.size(); j++)
+			if (!secondRemplacement[firstParentVector[j]])
+			{
+				secondChildVector[i] = firstParentVector[j];
+				secondRemplacement[firstParentVector[j]] = true;
+				secondCopyLastIndex = j + 1;
+				break;
+			}
 	}
 
 	Individual firstChild, secondChild;
-
-	try {
-		firstChild.setGenotype(firstChildVector, m_graph);
-		secondChild.setGenotype(secondChildVector, m_graph);
-	}
-	catch (...)
-	{
-		std::cout << "first parent\n";
-		for (auto x : firstParent.genotype)
-			std::cout << x << " ";
-		std::cout << std::endl;
-		std::cout << "second parent\n";
-		for (auto x : secondParent.genotype)
-			std::cout << x << " ";
-		std::cout << std::endl;
-		std::cout << "a: " << a << " b : " << b << std::endl;
-	}
+	firstChild.setGenotype(firstChildVector, m_graph);
+	secondChild.setGenotype(secondChildVector, m_graph);
 
 	return std::make_pair(firstChild, secondChild);
 }

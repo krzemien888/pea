@@ -157,7 +157,7 @@ TEST(GeneticAlgorithmTests, orderCrossShouldGenerateAcceptableSolutions)
 
 		if (a > b)
 			std::swap(a, b);
-
+		std::cerr << "test\n";
 		auto kids = ga.orderCrossover(firstParent, secondParent, a, b);
 
 
